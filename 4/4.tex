@@ -1,0 +1,443 @@
+\documentclass[handout]{beamer}
+%\documentclass{beamer}
+
+
+% MAKEN VAN BACKGROUND ETC.
+\mode<presentation> {
+ \usetheme{CambridgeUS} %stijl van de presentatie
+  \setbeamercovered{transparent}
+    \usecolortheme{beaver} %kleurpatroon
+}
+
+% INLADEN VAN PACKAGES%
+
+
+\usepackage{psboxit}
+\usepackage{fancybox}
+\usepackage{colordvi}
+\usepackage{epsfig}
+\usepackage{url}
+\usepackage{palatino}
+\usepackage[dutch]{babel}
+\usepackage[latin1]{inputenc} 
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\newtheorem{eigenschap}[theorem]{Eigenschap}
+\usepackage{amssymb,amsmath}
+\usepackage{pgflibraryarrows}
+\usepackage{tikz}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{colortbl}
+\usepackage{multimedia}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=blue     % can put red here to visualize the links
+}
+
+%\DeclareGraphicsExtensions{.pdf,.png,.gif,.jpg}
+
+\setcounter{tocdepth}{1}
+
+%-------Textpos setup and grid command-----
+
+\setlength{\TPHorizModule}{\the\paperwidth}  %defines unit length for textpos
+
+\newcommand<>{\makegrid}[0]{
+\begin{textblock}{1}(0,0) % width of block, origin at top left corner of page
+\uncover#1{
+\begin{tikzpicture}[color=blue!40!black!30,very thin]
+\draw[step=.5cm,draw opacity=.5] (0,0) grid
+(\the\paperwidth,\the\paperheight);
+\foreach \x in {1,2,...,12}
+   \draw[text=black] (\x,.15) node {\footnotesize \x};
+\foreach \y in {1,2,...,9}
+   \draw[text=black] (.2,\y) node {\footnotesize \y};
+\end{tikzpicture}  }
+\end{textblock}
+}
+
+\newcommand{\btx}{\begin{textblock}{1}(0,0)}
+\newcommand{\etx}{\end{textblock}}
+
+% INLADEN VAN MACRO-FILE
+ \input{../ldmacros}
+ \input{../rkmacros}
+
+% wat er op de titel pagina zal staan
+\author[El Mellah \& Sundqvist]{Ileyk El Mellah \& Jon Sundqvist}
+\institute[KU Leuven]{ 
+\begin{figure}
+\includegraphics[width=2cm]{figures/sedes.jpg}
+\end{figure}
+\scriptsize 
+Centre for mathematical Plasma Astrophysics \\
+Instituut voor Sterrenkunde\\ 
+KU Leuven
+}
+\date[2018-2019]
+
+%% voor de korte inhoud
+%\AtBeginSection[] %zorgt voor de korte inhoud (afhankelijk van het gekozen thema)
+% {
+%   \begin{frame}%<beamer>
+%    \title{CONTENTS}
+%    \tableofcontents[currentsection] %kan eventueel nog aangepast worden met currentsubsection enz, licht deze sectie op in korte inhoud
+%  \end{frame}
+% }
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{saveenumi}
+\newcounter{saveenumiplus}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLEPAGE
+\title[G0B30A Computational Methods]{Computational Methods \\for Astrophysical Applications}
+\frame{\titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{center}
+  \framebox[.8\textwidth]{\color{darkred}{\textbf{Lesson 4 : Approximate Riemann solvers}}}
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\BD
+
+\svsp
+\bul \BFred{?} \hfill \\
+?\\
+?
+
+\bul \BFred{?} \hfill \\
+?\\
+?\\
+?\\
+?
+
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Conservation laws}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Integral and differential forms}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Integral form}
+
+\BD
+
+\bul \BFred{useless?} Method is \BFblue{consistent} since LTE vanish in limit  $\Dx\rightarrow 0$ and $\Dt\rightarrow 0$
+\iar accuracy: 2nd order space, 1st order time $\rightarrow$ overall 1st 
+\iar failure is related to numerical stability
+\pause
+\bul round-off errors should not grow during time progression
+\iar evaluate by \BFred{von Neumann method}
+\iar numerical solution = exact $+$ round-off error $\epsilon(x,t)$
+\iar represent $\epsilon(x,t)$ in Fourier series, analyse Fourier term
+$$ \epsilon_k(x,t) = \hat{\epsilon}_k {\rm e}^{\lambda t} {\rm e}^{{\rm i}kx} $$
+\bul numerically stable scheme: for all spatial wavenumbers $k$
+$$  \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| = \big| {\rm e}^{\lambda\Dt}\big| \le 1 $$
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Differential and conservative forms}
+
+\BD
+\bul  FTCS scheme and von Neumann analysis yields
+$$ {\rm e}^{\lambda \Dt} = 1 - {v\Dt \over \Dx} \,{{\rm e}^{{\rm i}k\Dx} - {\rm e}^{-{\rm i}k\Dx} \over 2} = 1-{\rm i} \,{v\Dt \over \Dx} \,\sin{(k\Dx)} $$
+\iar scheme is \BFblue{unconditionally unstable} since for all $k$
+$$ \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| > 1 $$
+\pause
+\bul \BFblue{three cures} to save stability
+\iar add `numerical diffusion' to damp nonphysical instability
+\iar impose same space-time symmetry as original PDE
+\iar use implicit scheme
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Conservative variables, fluxes, sources}
+\BD
+\bul adding diffusion: advection-\Blue{diffusion} equation has form
+$$ \deldelt{u}=-v\,\deldelx{u}+\Blue{{\cal D}\,\deldelxx{u}} $$
+\iar diffusion coefficient ${\cal D}$
+\pause
+\bul replace $\Red{u_i^n}$ by spatial average between $x_{i-1}$ and $x_{i+1}$, arrive at
+$$ \yellowbx{$u^{n+1}_i = \Red{{u^n_{i+1} + u^n_{i-1} \over 2}} - v \,{\Dt \over \Dx} \,{u^n_{i+1} - u^n_{i-1} \over 2} $} $$
+\iar \BFred{Lax--Friedrichs scheme} (or Lax scheme)
+\iar rearrange to form
+$$ {u^{n+1}_i -u^n_i\over\Dt}= -v\,{u^n_{i+1} - u^n_{i-1} \over 2\Dx} + {(\Dx)^2 \over 2\Dt} \,{u^n_{i+1} - 2u^n_i + u^n_{i-1} \over (\Dx)^2} $$
+\iar numerical dissipation with ${\cal D}\equiv {(\Dx)^2 \over 2\Dt}$
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Closure relation}
+
+\BD
+\bul  FTCS scheme and von Neumann analysis yields
+$$ {\rm e}^{\lambda \Dt} = 1 - {v\Dt \over \Dx} \,{{\rm e}^{{\rm i}k\Dx} - {\rm e}^{-{\rm i}k\Dx} \over 2} = 1-{\rm i} \,{v\Dt \over \Dx} \,\sin{(k\Dx)} $$
+\iar scheme is \BFblue{unconditionally unstable} since for all $k$
+$$ \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| > 1 $$
+\pause
+\bul \BFblue{three cures} to save stability
+\iar add `numerical diffusion' to damp nonphysical instability
+\iar impose same space-time symmetry as original PDE
+\iar use implicit scheme
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Examples}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linear advection equation}
+\BD
+\bul perform von Neumann stability analysis for Lax--Friedrichs 
+$$ {\rm e}^{\lambda \Dt} = \cos{(k\Dx)}- {\rm i} \,{v\Dt \over \Dx} \,\sin{(k\Dx)} $$
+\iar \BFblue{conditional stability} requiring Courant number $C$
+$$ C \equiv {|v|\Dt \over \Dx} \le 1 $$
+\iar limitation of the time step $\Dt$ for a given resolution $\Dx$
+\iar \BFblue{Courant--Friedrichs--Lewy} condition (1928)
+\iar necessary (not sufficient) condition for stability!
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Euler equations}
+
+\BD
+\bul in $(x,t)$ space, we identify {\bf stencil} of a method
+\iar stencils visualizes discrete dependence of method \hfill \\
+\centerline{\yellowbx{\includegraphics[height=2.5cm,width=10cm,clip=]{figures/Fig15-14top}}}
+\iar stencil for FTCS (a) versus Lax-Friedrichs (b)
+\pause
+\bul \BFblue{hyperbolic} PDE and \BFblue{physical characteristics}
+\iar the advection equation is hyperbolic as
+$$ \deldelt{u} + \deldelx{\left(\underbrace{v u}_{\Blue{F}}\right)}=0 $$
+and Flux Jacobian $\frac{\partial \Blue{F}}{\partial u}= v$ is real number, `characteristic speed'
+\iar $x-t$ curves given by $\xi=x-vt$ yield $d\,u=0$ or $u$ constant
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Ideal Magneto-Hydrodynamics equations}
+
+\BD
+\bul for second order wave equation
+$$ \deldeltt{u}- v^2 \deldelxx{u} = 0 $$
+\iar factorizes to
+$$ \left(\deldelt{}- v \deldelx{}\right)\left(\deldelt{}+ v \deldelx{}\right) u = 0 $$
+\iar general solution has left and right going wave with
+$$ u= f(x-v t) + g(x+v t) $$
+\iar initial shapes $f(x)$, $g(x)$ combine 
+\iar 2 characteristics $\frac{dx}{dt}=\pm v$
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\BD
+\bul illustrate CFL for second order wave equation:
+\hfill \\
+\BFred{the domain of dependence of the differential equation should be contained in the DOD of the discretised equations} \hfill \\
+\yellowbx{\includegraphics[height=4cm,width=10cm,clip=]{figures/Fig15-15}}
+\iar stability means physical DOD contained in stencil bounds (numerical DOD), hence $\Delta t$ small enough (right case)
+\pause
+\bul note: linear advection $+$ wave equation: DOD only involves 1 or 2 points from $t=0$
+$\leftrightarrow$ HD: DOD bounds set by $v\pm c_s$ with $c_s$ sound speed, delimits $t=0$ interval
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\BD
+\bul Second cure: maintain space-time symmetry of the PDE
+\iar use central discretisation for both $x$ and $t$
+\iar obtain \BFred{leapfrog} scheme
+$$ u^{n+1}_i = u^{n-1}_i - {\Dt\over\Dx} \,(F^n_{i+1} - F^n_{i-1}) $$
+\pause
+\iar numerical flux function for advection is $F^n_i\equiv vu^n_i$
+\iar conditionally stable and second-order accurate
+\iar multiple time levels involved: $n-1$, $n$, $n+1$
+\iar potential problem: even/oneven time levels may `decouple' 
+\ED
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Hyperbolic PDE}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matrix formulation of conservation laws}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Flux Jacobian}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Eigenvalues \& eigenvectors}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Hyperbolic, parabolic and elliptic PDE}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linear, non-linear \& quasi-linear}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Time advance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Explicit}
+
+\BD
+\bul spatial differences as average of $n$-th and $(n+1)$-th time step
+$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
+\iar second order \BFred{Crank--Nicolson method}
+\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
+\vspace*{0.5cm}
+\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
+\centerline{\yellowbx{\includegraphics[height=3cm]{figures/Fig15-17}}}
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Implicit}
+
+\BD
+\bul spatial differences as average of $n$-th and $(n+1)$-th time step
+$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
+\iar second order \BFred{Crank--Nicolson method}
+\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
+\vspace*{0.5cm}
+\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
+\centerline{\includegraphics[height=3cm]{figures/Fig15-17}}
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Linear advective equations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Properties}
+\BD
+\bul many practical implementations use `method of lines'
+\iar vector $\bfu$ of unknowns after first spatial discretization
+\iar obtain ODE system
+$$ \ddt{\bfu}=\bff(\bfu) $$
+\iar RHS vector function $\bff$ could even be nonlinear in $\bfu$
+\vspace*{0.5cm}
+\bul discretize ODE in time using parameter $\alpha$ in
+$$ \bfu^{n+1}=\bfu^n+\Dt\left[\alpha\bff(\bfu^{n+1}) + (1-\alpha)\bff(\bfu^n)\right] $$
+\iar note case $\alpha=0$: explicit (unstable) forward Euler method
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Characteristics}
+\BD
+\bul many practical implementations use `method of lines'
+\iar vector $\bfu$ of unknowns after first spatial discretization
+\iar obtain ODE system
+$$ \ddt{\bfu}=\bff(\bfu) $$
+\iar RHS vector function $\bff$ could even be nonlinear in $\bfu$
+\vspace*{0.5cm}
+\bul discretize ODE in time using parameter $\alpha$ in
+$$ \bfu^{n+1}=\bfu^n+\Dt\left[\alpha\bff(\bfu^{n+1}) + (1-\alpha)\bff(\bfu^n)\right] $$
+\iar note case $\alpha=0$: explicit (unstable) forward Euler method
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Stencils, domain of dependence, range of influence}
+\BD
+\bul many practical implementations use `method of lines'
+\iar vector $\bfu$ of unknowns after first spatial discretization
+\iar obtain ODE system
+$$ \ddt{\bfu}=\bff(\bfu) $$
+\iar RHS vector function $\bff$ could even be nonlinear in $\bfu$
+\vspace*{0.5cm}
+\bul discretize ODE in time using parameter $\alpha$ in
+$$ \bfu^{n+1}=\bfu^n+\Dt\left[\alpha\bff(\bfu^{n+1}) + (1-\alpha)\bff(\bfu^n)\right] $$
+\iar note case $\alpha=0$: explicit (unstable) forward Euler method
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The Riemann problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Riemann problem}
+$$ \bfu^{n+1}=\bfu^n+\Dt\left[\alpha\bff(\bfu^{n+1}) + (1-\alpha)\bff(\bfu^n)\right] $$
+\BD
+\bul $\alpha=1$ is \BF{implicit backward Euler}
+\bul $\alpha=1/2$ gives second-order accuracy, \BFblue{trapezoidal method}
+\iar Crank-Nicolson for central discretization of flux in $\bff$
+\vspace*{0.5cm}
+\bul when $\bff$ nonlinear: linearize using
+$$ \bff(\bfu^{n+1}) \approx \bff(\bfu^n) + {\partial \bff^n \over \partial \bfu} \,(\bfu^{n+1} - \bfu^n) $$
+\iar introduces matrix  $\displaystyle {\partial \bff^n \over \partial \bfu}$ called \BFred{\em ``Jacobian matrix''} of $\bff$
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

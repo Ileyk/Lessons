@@ -1,0 +1,426 @@
+\documentclass[handout]{beamer}
+%\documentclass{beamer}
+
+
+% MAKEN VAN BACKGROUND ETC.
+\mode<presentation> {
+ \usetheme{CambridgeUS} %stijl van de presentatie
+  \setbeamercovered{transparent}
+    \usecolortheme{beaver} %kleurpatroon
+}
+
+% INLADEN VAN PACKAGES%
+
+
+\usepackage{psboxit}
+\usepackage{fancybox}
+\usepackage{colordvi}
+\usepackage{epsfig}
+\usepackage{url}
+\usepackage{palatino}
+\usepackage[dutch]{babel}
+\usepackage[latin1]{inputenc} 
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\newtheorem{eigenschap}[theorem]{Eigenschap}
+\usepackage{amssymb,amsmath}
+\usepackage{pgflibraryarrows}
+\usepackage{tikz}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{colortbl}
+\usepackage{multimedia}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=blue     % can put red here to visualize the links
+}
+
+%\DeclareGraphicsExtensions{.pdf,.png,.gif,.jpg}
+
+\setcounter{tocdepth}{1}
+
+%-------Textpos setup and grid command-----
+
+\setlength{\TPHorizModule}{\the\paperwidth}  %defines unit length for textpos
+
+\newcommand<>{\makegrid}[0]{
+\begin{textblock}{1}(0,0) % width of block, origin at top left corner of page
+\uncover#1{
+\begin{tikzpicture}[color=blue!40!black!30,very thin]
+\draw[step=.5cm,draw opacity=.5] (0,0) grid
+(\the\paperwidth,\the\paperheight);
+\foreach \x in {1,2,...,12}
+   \draw[text=black] (\x,.15) node {\footnotesize \x};
+\foreach \y in {1,2,...,9}
+   \draw[text=black] (.2,\y) node {\footnotesize \y};
+\end{tikzpicture}  }
+\end{textblock}
+}
+
+\newcommand{\btx}{\begin{textblock}{1}(0,0)}
+\newcommand{\etx}{\end{textblock}}
+
+% INLADEN VAN MACRO-FILE
+ \input{../ldmacros}
+ \input{../rkmacros}
+
+% wat er op de titel pagina zal staan
+\author[El Mellah \& Sundqvist]{Ileyk El Mellah \& Jon Sundqvist}
+\institute[KU Leuven]{ 
+\begin{figure}
+\includegraphics[width=2cm]{figures/sedes.jpg}
+\end{figure}
+\scriptsize 
+Centre for mathematical Plasma Astrophysics \\
+Instituut voor Sterrenkunde\\ 
+KU Leuven
+}
+\date[2018-2019]
+
+% voor de korte inhoud
+\AtBeginSection[] %zorgt voor de korte inhoud (afhankelijk van het gekozen thema)
+ {
+   \begin{frame}%<beamer>
+    \title{CONTENTS}
+    \tableofcontents[currentsection] %kan eventueel nog aangepast worden met currentsubsection enz, licht deze sectie op in korte inhoud
+  \end{frame}
+ }
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{saveenumi}
+\newcounter{saveenumiplus}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLEPAGE
+\title[G0B30A Computational Methods]{Computational Methods \\for Astrophysical Applications}
+\frame{\titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{center}
+  \framebox[.9\textwidth]{\color{darkred}{\textbf{Lesson 3 : Non linear hybridization for scalar advection}}}
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\BD
+
+\svsp
+\bul \BF{Finite volume approximation} \hfill \\
+Mesh, cell centers and interfaces\\
+Integral form of the conservation equations
+
+\bul \BF{Reconstruction} \hfill \\
+Piecewise linear reconstruction\\
+Slope limiters\\
+TVD schemes
+
+\bul \BF{The Riemann problem} \hfill \\
+?\\
+Building block for hyperbolic PDE\\
+Local Lax-Friedrichs\\
+Boundary conditions\\
+Linearized Euler system
+
+\bul \BF{2$^{\text{nd}}$ order upwind schemes} \hfill \\
+Lax-Wendroff\\
+Runge-Kutta\\
+?
+
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Finite volume approximation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mesh, cell centers \& interfaces}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+
+\bul \BFred{useless?} Method is \BFblue{consistent} since LTE vanish in limit  $\Dx\rightarrow 0$ and $\Dt\rightarrow 0$
+\iar accuracy: 2nd order space, 1st order time $\rightarrow$ overall 1st 
+\iar failure is related to numerical stability
+\pause
+\bul round-off errors should not grow during time progression
+\iar evaluate by \BFred{von Neumann method}
+\iar numerical solution = exact $+$ round-off error $\epsilon(x,t)$
+\iar represent $\epsilon(x,t)$ in Fourier series, analyse Fourier term
+$$ \epsilon_k(x,t) = \hat{\epsilon}_k {\rm e}^{\lambda t} {\rm e}^{{\rm i}kx} $$
+\bul numerically stable scheme: for all spatial wavenumbers $k$
+$$  \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| = \big| {\rm e}^{\lambda\Dt}\big| \le 1 $$
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Integral form of the conservative equations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+
+\bul \BFred{useless?} Method is \BFblue{consistent} since LTE vanish in limit  $\Dx\rightarrow 0$ and $\Dt\rightarrow 0$
+\iar accuracy: 2nd order space, 1st order time $\rightarrow$ overall 1st 
+\iar failure is related to numerical stability
+\pause
+\bul round-off errors should not grow during time progression
+\iar evaluate by \BFred{von Neumann method}
+\iar numerical solution = exact $+$ round-off error $\epsilon(x,t)$
+\iar represent $\epsilon(x,t)$ in Fourier series, analyse Fourier term
+$$ \epsilon_k(x,t) = \hat{\epsilon}_k {\rm e}^{\lambda t} {\rm e}^{{\rm i}kx} $$
+\bul numerically stable scheme: for all spatial wavenumbers $k$
+$$  \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| = \big| {\rm e}^{\lambda\Dt}\big| \le 1 $$
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Reconstruction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Piecewise linear reconstruction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Slope limiters}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{MinMod}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{MC}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Van Leer}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Superbee}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{TVD schemes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Harten's theorem}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Definition of TV}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{TVD regions of slope limiters}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The Riemann problem}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{?}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Building blocks for hyperbolic PDE}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Local Lax-Friedrichs}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Boundary conditions}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Linearized Euler system}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{2$^{\text{nd}}$ order upwind schemes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Lax-Wendroff}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Runge-Kutta}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

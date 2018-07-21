@@ -1,0 +1,310 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                 Macros for LaTeX transparencies                      %
+%                 ===============================                      %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ordinary differential operators:
+\def\dd #1#2{{d #1\over d #2}}
+\def\ddx #1{{d #1 \over dx}}
+\def\ddr #1{{d #1 \over dr}}
+\def\ddt #1{{d #1 \over dt}}
+\def\ddxx #1{{d^2 #1 \over dx^2}}
+\def\DDt #1{{D #1 \over Dt}}
+
+\def\diag{{\rm diag}}
+\def\divb{\nabla \cdot \bfB}
+
+% Technical terms:
+\def\oms {\omega^2}
+\def\omAs {\omega_A^2}
+\def\omSs {\omega_S^2}
+\def\omss {\omega_s^2}
+\def\omfs {\omega_f^2}
+\def\omIs {\omega_I^2}
+\def\omIIs {\omega_{I\!I}^2}
+
+\def\Dx{{\Delta x}}
+\def\Dy{{\Delta y}}
+\def\Dz{{\Delta z}}
+\def\Dt{{\Delta t}}
+\def\Dr{{\Delta r}}
+\def\kpar{ k_\parallel }
+\def\kperp{ k_\perp }
+
+% Reduced size of quotients in display:
+\def\half {{\textstyle{1\over2}}}
+\def\threehalf {{\textstyle{3\over2}}}
+\def\fivehalf {{\textstyle{5\over2}}}
+\def\onethird {{\textstyle{1\over3}}}
+\def\twothird {{\textstyle{2\over3}}}
+\def\fivethird {{\textstyle{5\over3}}}
+\def\onefourth {{\textstyle{1\over4}}}
+\def\threefourth {{\textstyle{3\over4}}}
+\def\shalf {{\scriptstyle{1\over2}}}
+
+
+% Vertical and horizontal spacing:
+\def\ver #1{{\vskip #1 mm}}
+\def\hor #1{{\hskip #1 mm}}
+
+% Forcing display in text equations:
+\def\ds{\displaystyle}
+
+% Vector operators:
+\def\div #1{\nabla\cdot #1}
+\def\curl #1{\nabla\times #1}
+
+% Partial differential operators:
+\def\deldel #1#2{{\partial #1 \over \partial #2}}
+\def\deldelt #1{{{\partial #1} \over \partial t}}
+\def\deldeltt #1{{\partial^2 #1 \over \partial t^2}}
+\def\deldelx #1{{{\partial #1} \over \partial x}}
+\def\deldelxx #1{{\partial^2 #1 \over \partial x^2}}
+\def\deldely #1{{{\partial #1} \over \partial y}}
+\def\deldelyy #1{{\partial^2 #1 \over \partial y^2}}
+\def\deldelz #1{{{\partial #1} \over \partial z}}
+\def\deldelzz #1{{\partial^2 #1 \over \partial z^2}}
+\def\deldelxy #1{{\partial^2 #1 \over \partial x \partial y}}
+\def\ddeldel#1#2{{\partial^2 #1 \over \partial {#2}^2}}
+
+% Bold math symbols:
+\def\bfalpha{\mbox{\boldmath $\alpha$}}  % bold alpha
+\def\bfbeta{\mbox{\boldmath $\beta$}}  % bold beta
+\def\bfchi{\mbox{\boldmath $\chi$}}  % bold chi
+\def\bfdelta{\mbox{\boldmath $\delta$}}  % bold delta
+\def\bfeta{\mbox{\boldmath $\eta$}}  % bold eta
+\def\bfgamma{\mbox{\boldmath $\gamma$}}  % bold gamma
+\def\bfkappa{\mbox{\boldmath $\kappa$}}  % bold kappa
+\def\bflambda{\mbox{\boldmath $\lambda$}}  % bold lambda
+\def\bfmu{\mbox{\boldmath $\mu$}}  % bold mu
+\def\bfomega{\mbox{\boldmath $\omega$}}
+\def\bfOmega{\mbox{\boldmath $\Omega$}}
+\def\bfphi{\mbox{\boldmath $\phi$}}  % bold phi
+\def\bfvarphi{\mbox{\boldmath $\varphi$}}  % bold varphi
+\def\bfpi{\mbox{\boldmath $\pi$}}  % bold pi
+\def\bfPi{\mbox{\boldmath $\Pi$}}  % bold Pi
+\def\bfpsi{\mbox{\boldmath $\psi$}}  % bold psi
+\def\bfrho{\mbox{\boldmath $\rho$}}  % bold rho
+\def\bfsigma{\mbox{\boldmath $\sigma$}}  % bold sigma
+\def\bftau{\mbox{\boldmath $\tau$}}  % bold tau
+\def\bftheta{\mbox{\boldmath $\theta$}}  % bold theta
+\def\bfvartheta{\mbox{\boldmath $\vartheta$}}  % bold vartheta
+\def\bfxi{\mbox{\boldmath $\xi$}}  % bold xi
+\def\bfzeta{\mbox{\boldmath $\zeta$}}  % bold zeta
+\def\bfell{\mbox{\boldmath $l$}}  % bold script l
+\def\bfsig{{\mathbf \sigma}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% par boxes
+\def\blueboxit#1{\colorbox{blue}{\parbox{.97\textwidth}{#1}}}
+\def\whiteboxit#1{\colorbox{white}{\parbox{.97\textwidth}{#1}}}
+\def\blackboxit#1{\colorbox{black}{\parbox{.97\textwidth}{#1}}}
+\def\darkblueboxit#1{\colorbox{darkblue}{\parbox{.97\textwidth}{#1}}}
+\def\yellowboxit#1{\colorbox{yellow}{\parbox{.97\textwidth}{#1}}}
+\def\eggboxit#1{\colorbox{egg}{\parbox{.97\textwidth}{#1}}}
+\def\greyboxit#1{\colorbox{grey}{\parbox{.97\textwidth}{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% colored text boxes
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\blackbx#1{\colorbox{black}{\mbox{\White{#1}}}}
+\def\greybx#1{\colorbox{grey}{\mbox{\White{#1}}}}
+\def\bluebx#1{\colorbox{blue}{\mbox{#1}}}
+\def\darkbluebx#1{\colorbox{darkblue}{\mbox{#1}}}
+\def\yellowbx#1{\colorbox{yellow}{\mbox{#1}}}
+\def\eggbx#1{\colorbox{egg}{\mbox{#1}}}
+\def\pinkbx#1{\colorbox{pink}{\mbox{#1}}}
+\def\whitebx#1{\colorbox{white}{\mbox{#1}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% fonts and headers:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% For use with \Huge:
+%\font\Gfont=phvb at 40truemm
+%\font\hfont=phvb at 12truemm
+%\font\lfont=phvb at 10truemm
+%\font\mfont=phvr at 10truemm
+%\font\sfont=phvr at  9truemm
+%\font\tfont=phvr at  7truemm
+%\font\bfont=phvb at  7truemm
+%\font\efont=phvro at 7truemm
+%\font\ftfont=phvr at  5.5truemm
+%\font\fbfont=phvb at  5.5truemm
+%\font\fefont=phvro at 5.5truemm
+
+% For use with \LARGE:
+\font\Gfont=phvb at 37.1truemm
+\font\hfont=phvb at 11.1truemm
+\font\lfont=phvb at 9.3truemm
+\font\mfont=phvr at 9.3truemm
+\font\sfont=phvr at  8.36truemm
+\font\tfont=phvr at  6.5truemm
+\font\bfont=phvb at  6.5truemm
+\font\efont=phvro at 6.5truemm
+\font\ftfont=phvr at  5.1truemm
+\font\fbfont=phvb at  5.1truemm
+\font\fefont=phvro at 5.1truemm
+
+%\def\Lhead#1 {{\vglue 3 mm\Huge\lfont\noindent\shadowbox{\Black{$\ ${#1}$\ 
+%$}}\vglue 3mm}}
+\def\Lhead#1 {{\vspace*{3mm}\Huge\lfont\noindent\shadowbox{\Black{$\ ${#1}$\ 
+$}}\vspace*{3mm}}}
+% jpg New definition to put vertical space around text in mhead: 
+\def\Mhead#1 { \mhead{$\vertph$#1} }
+%\def\mhead#1 {{\vglue 3 mm\mfont\noindent\Ovalbox{$\ ${#1}$\ $}\vglue 2 mm}}
+\def\mhead#1 {{\vspace*{3mm}\mfont\noindent\Ovalbox{$\ ${#1}$\ $}\vspace*{3mm}}}
+\def\shead#1 {{\vglue 2 mm\sfont\noindent\fbox{$\ ${#1}$\ $}\vglue 1 mm}}
+\def\head#1  {{\vglue 2 mm\sfont\noindent #1 \vglue 1 mm}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% text markers and vertical spaces
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\ul#1{\leavevmode\hbox{\vtop{\vbox{\hbox{\vphantom({#1}}}\kern1pt\hrule}}}
+\def\IT#1{{\em #1\/}}
+\def\vsp{\bigskip}
+\def\svsp{\medskip}
+\def\vsvsp{\smallskip}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% text commands
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\RM #1{{\tfont #1}}
+\def\RMred #1{{\tfont{\color{red}{#1}}}}
+\def\RMblue #1{{\tfont{\color{blue}{#1}}}}
+
+\def\BF #1{{\bf #1}}
+\def\BFred #1{{\bf{\color{red}{#1}}}}
+\def\BFblue #1{{\bf{\color{blue}{#1}}}}
+
+\def\IT #1{{\em #1\/}}
+\def\ITred #1{{\em{\color{red}{#1\/}}}}
+\def\ITblue #1{{\em{\color{blue}{#1\/}}}}
+
+\def\BFmagenta #1{{\bf{\color{magenta}{#1}}}}
+
+\definecolor{black}{rgb}{0,0,0}
+\definecolor{grey}{rgb}{0.8,0.8,0.8}
+\definecolor{darkblue}{rgb}{0,0,0.6}
+\definecolor{blue}{rgb}{0,0.25,1}
+\definecolor{red}{rgb}{1,0,0}
+\definecolor{rose}{rgb}{1,0.9,0.9}
+\definecolor{green}{rgb}{0,1,0}
+\definecolor{olivegreen}{rgb}{0.3,0.5,0.1}
+\definecolor{egg}{rgb}{1,1,0.5}
+\definecolor{yellow}{rgb}{1,1,0.2}
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{pink}{rgb}{1.,0.75,0.8}
+\definecolor{cubinblue}{rgb}{0.0,0.447,0.549}
+\definecolor{junglegreen}{rgb}{0.3,0.5,0.1}
+\definecolor{royalblue}{rgb}{0.2,0.2,0.9}
+\definecolor{brown}{rgb}{0.4,0.1,0.1}
+
+
+\def\BFolive #1{{\bf{\color{olivegreen}{#1}}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Begin and end of equations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\BEQ {\begin{equation}}   % numbered equation
+\def\EEQ {\end{equation}}
+\def\BEQN {\begin{displaymath}} % unnumbered equation
+\def\EEQN {\end{displaymath}}
+\def\BEQAR {\begin{eqnarray}} % numbered equation array
+\def\EEQAR {\end{eqnarray}}
+\def\BEQARN {\begin{eqnarray*}} % unnumbered equation array
+\def\EEQARN {\end{eqnarray*}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% item labels to be used in description environment:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\bul{\item[$\bullet$]{\hskip 3mm} }
+\def\dash{\item[--]{\hskip 3mm} }
+\def\ar{\item[$\Rightarrow$]{\hskip -1mm} }
+\def\si{\item[ ]{\hskip 4.5mm} }
+
+\def\ibul{\item[ ] \qquad $\bullet${\hskip 4mm} }
+\def\idsh{\item[ ] \qquad --{\hskip 4mm} }
+\def\iar{\item[ ] \qquad $\Rightarrow${\hskip 1mm} }
+\def\ii{\item[ ] \qquad{\hskip 8mm} }
+
+\def\arby#1{\item [$\stackrel{\mbox{\fefont #1}}{\Longrightarrow}$]}
+
+% Abbreviations of frequently used commands
+\newcommand{\ra}{$\ \Rightarrow\ $}
+\newcommand{\BD}{\begin{itemize}}
+\newcommand{\ED}{\end{itemize}}
+\newcommand{\sis}{\setlength{\itemsep}{-1mm}}
+\newcommand{\ed}{\end{document}}
+\newcommand{\nin}{\noindent}
+\newcommand{\vv}{\vspace{5mm}}
+\newcommand{\nvt}{\vspace{-10mm}}
+\newcommand{\nvv}{\vspace{-5mm}}
+\newcommand{\np}{\newpage}
+
+
+% Bold vectors:
+\def\bfa {{\bf a}}
+\def\bfb {{\bf b}}
+\def\bfc {{\bf c}}
+\def\bfd {{\bf d}}
+\def\bfe {{\bf e}}
+\def\bff {{\bf f}}
+\def\bfg {{\bf g}}
+\def\bfh {{\bf h}}
+\def\bfi {{\bf i}}
+\def\bfj {{\bf j}}
+\def\bfk {{\bf k}}
+\def\bfl {{\bf l}}
+\def\bfm {{\bf m}}
+\def\bfn {{\bf n}}
+\def\bfo {{\bf o}}
+\def\bfp {{\bf p}}
+\def\bfq {{\bf q}}
+\def\bfr {{\bf r}}
+\def\bfs {{\bf s}}
+\def\bft {{\bf t}}
+\def\bfu {{\bf u}}
+\def\bfv {{\bf v}}
+\def\bfw {{\bf w}}
+\def\bfx {{\bf x}}
+\def\bfy {{\bf y}}
+\def\bfz {{\bf z}}
+\def\bfA {{\bf A}}
+\def\bfB {{\bf B}}
+\def\bfC {{\bf C}}
+\def\bfD {{\bf D}}
+\def\bfE {{\bf E}}
+\def\bfF {{\bf F}}
+\def\bfG {{\bf G}}
+\def\bfH {{\bf H}}
+\def\bfI {{\bf I}}
+\def\bfJ {{\bf J}}
+\def\bfK {{\bf K}}
+\def\bfL {{\bf L}}
+\def\bfM {{\bf M}}
+\def\bfN {{\bf N}}
+\def\bfO {{\bf O}}
+\def\bfP {{\bf P}}
+\def\bfQ {{\bf Q}}
+\def\bfR {{\bf R}}
+\def\bfS {{\bf S}}
+\def\bfT {{\bf T}}
+\def\bfU {{\bf U}}
+\def\bfV {{\bf V}}
+\def\bfW {{\bf W}}
+\def\bfX {{\bf X}}
+\def\bfY {{\bf Y}}
+\def\bfZ {{\bf Z}}
+
+\def\bety{\beta_y}
+\def\betz{\beta_z}
+\def\sgbx{\beta_x}
+\def\alff{\alpha_f^2}
+\def\alfs{\alpha_s^2}
+\def\rhh{\rho^\shalf}
+\def\bfsig{{\mathbf \sigma}}
+

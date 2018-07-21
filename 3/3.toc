@@ -1,0 +1,18 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {dutch}
+\beamer@sectionintoc {1}{Finite volume approximation}{4}{0}{1}
+\beamer@subsectionintoc {1}{1}{Mesh, cell centers \& interfaces}{5}{0}{1}
+\beamer@subsectionintoc {1}{2}{Integral form of the conservative equations}{6}{0}{1}
+\beamer@sectionintoc {2}{Reconstruction}{7}{0}{2}
+\beamer@subsectionintoc {2}{1}{Piecewise linear reconstruction}{8}{0}{2}
+\beamer@subsectionintoc {2}{2}{Slope limiters}{9}{0}{2}
+\beamer@subsectionintoc {2}{3}{TVD schemes}{13}{0}{2}
+\beamer@sectionintoc {3}{The Riemann problem}{16}{0}{3}
+\beamer@subsectionintoc {3}{1}{?}{17}{0}{3}
+\beamer@subsectionintoc {3}{2}{Building blocks for hyperbolic PDE}{18}{0}{3}
+\beamer@subsectionintoc {3}{3}{Local Lax-Friedrichs}{19}{0}{3}
+\beamer@subsectionintoc {3}{4}{Boundary conditions}{20}{0}{3}
+\beamer@subsectionintoc {3}{5}{Linearized Euler system}{21}{0}{3}
+\beamer@sectionintoc {4}{2$^{\text {nd}}$ order upwind schemes}{22}{0}{4}
+\beamer@subsectionintoc {4}{1}{Lax-Wendroff}{23}{0}{4}
+\beamer@subsectionintoc {4}{2}{Runge-Kutta}{24}{0}{4}

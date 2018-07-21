@@ -1,0 +1,10 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {dutch}
+\beamer@sectionintoc {1}{Conservation laws}{4}{0}{1}
+\beamer@subsectionintoc {1}{1}{Integral and differential forms}{4}{0}{1}
+\beamer@subsectionintoc {1}{2}{Examples}{8}{0}{1}
+\beamer@sectionintoc {2}{Hyperbolic PDE}{13}{0}{2}
+\beamer@subsectionintoc {2}{1}{Matrix formulation of conservation laws}{13}{0}{2}
+\beamer@subsectionintoc {2}{2}{Time advance}{17}{0}{2}
+\beamer@subsectionintoc {2}{3}{Linear advective equations}{19}{0}{2}
+\beamer@subsectionintoc {2}{4}{The Riemann problem}{22}{0}{2}

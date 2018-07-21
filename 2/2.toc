@@ -1,0 +1,8 @@
+\beamer@endinputifotherversion {3.36pt}
+\select@language {dutch}
+\beamer@sectionintoc {1}{Spatial discretization}{4}{0}{1}
+\beamer@subsectionintoc {1}{1}{Mesh and data collocation}{5}{0}{1}
+\beamer@subsectionintoc {1}{2}{Discrete equations}{6}{0}{1}
+\beamer@sectionintoc {2}{Time advance}{10}{0}{2}
+\beamer@subsectionintoc {2}{1}{Von Neumann stability analysis}{11}{0}{2}
+\beamer@subsectionintoc {2}{2}{Explicit linear schemes}{13}{0}{2}

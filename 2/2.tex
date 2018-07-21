@@ -1,0 +1,309 @@
+\documentclass[handout]{beamer}
+%\documentclass{beamer}
+
+
+% MAKEN VAN BACKGROUND ETC.
+\mode<presentation> {
+ \usetheme{CambridgeUS} %stijl van de presentatie
+  \setbeamercovered{transparent}
+    \usecolortheme{beaver} %kleurpatroon
+}
+
+% INLADEN VAN PACKAGES%
+
+
+\usepackage{psboxit}
+\usepackage{fancybox}
+\usepackage{colordvi}
+\usepackage{epsfig}
+\usepackage{url}
+\usepackage{palatino}
+\usepackage[dutch]{babel}
+\usepackage[latin1]{inputenc} 
+\usepackage{times}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\newtheorem{eigenschap}[theorem]{Eigenschap}
+\usepackage{amssymb,amsmath}
+\usepackage{pgflibraryarrows}
+\usepackage{tikz}
+\usepackage[absolute,overlay]{textpos}
+\usepackage{colortbl}
+\usepackage{multimedia}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,%
+    citecolor=black,%
+    filecolor=black,%
+    linkcolor=black,%
+    urlcolor=blue     % can put red here to visualize the links
+}
+
+%\DeclareGraphicsExtensions{.pdf,.png,.gif,.jpg}
+
+\setcounter{tocdepth}{1}
+
+%-------Textpos setup and grid command-----
+
+\setlength{\TPHorizModule}{\the\paperwidth}  %defines unit length for textpos
+
+\newcommand<>{\makegrid}[0]{
+\begin{textblock}{1}(0,0) % width of block, origin at top left corner of page
+\uncover#1{
+\begin{tikzpicture}[color=blue!40!black!30,very thin]
+\draw[step=.5cm,draw opacity=.5] (0,0) grid
+(\the\paperwidth,\the\paperheight);
+\foreach \x in {1,2,...,12}
+   \draw[text=black] (\x,.15) node {\footnotesize \x};
+\foreach \y in {1,2,...,9}
+   \draw[text=black] (.2,\y) node {\footnotesize \y};
+\end{tikzpicture}  }
+\end{textblock}
+}
+
+\newcommand{\btx}{\begin{textblock}{1}(0,0)}
+\newcommand{\etx}{\end{textblock}}
+
+% INLADEN VAN MACRO-FILE
+ \input{../ldmacros}
+ \input{../rkmacros}
+
+% wat er op de titel pagina zal staan
+\author[El Mellah \& Sundqvist]{Ileyk El Mellah \& Jon Sundqvist}
+\institute[KU Leuven]{ 
+\begin{figure}
+\includegraphics[width=2cm]{figures/sedes.jpg}
+\end{figure}
+\scriptsize 
+Centre for mathematical Plasma Astrophysics \\
+Instituut voor Sterrenkunde\\ 
+KU Leuven
+}
+\date[2018-2019]
+
+% voor de korte inhoud
+\AtBeginSection[] %zorgt voor de korte inhoud (afhankelijk van het gekozen thema)
+ {
+   \begin{frame}%<beamer>
+    \title{CONTENTS}
+    \tableofcontents[currentsection] %kan eventueel nog aangepast worden met currentsubsection enz, licht deze sectie op in korte inhoud
+  \end{frame}
+ }
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcounter{saveenumi}
+\newcounter{saveenumiplus}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TITLEPAGE
+\title[G0B30A Computational Methods]{Computational Methods \\for Astrophysical Applications}
+\frame{\titlepage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\begin{center}
+  \framebox[.8\textwidth]{\color{darkred}{\textbf{Lesson 2 : Finite Difference Approximation}}}
+\end{center}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\BD
+
+\svsp
+\bul \BF{Spatial discretization} \hfill \\
+Mesh and data collocation\\
+Discrete equations
+
+\bul \BF{Time advance} \hfill \\
+Von Neumann stability analysis\\
+Explicit linear schemes
+
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Spatial discretization}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Mesh and data collocation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\BD
+
+\bul \BFred{useless?} Method is \BFblue{consistent} since LTE vanish in limit  $\Dx\rightarrow 0$ and $\Dt\rightarrow 0$
+\iar accuracy: 2nd order space, 1st order time $\rightarrow$ overall 1st 
+\iar failure is related to numerical stability
+\pause
+\bul round-off errors should not grow during time progression
+\iar evaluate by \BFred{von Neumann method}
+\iar numerical solution = exact $+$ round-off error $\epsilon(x,t)$
+\iar represent $\epsilon(x,t)$ in Fourier series, analyse Fourier term
+$$ \epsilon_k(x,t) = \hat{\epsilon}_k {\rm e}^{\lambda t} {\rm e}^{{\rm i}kx} $$
+\bul numerically stable scheme: for all spatial wavenumbers $k$
+$$  \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| = \big| {\rm e}^{\lambda\Dt}\big| \le 1 $$
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Discrete equations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Taylor series expansions}
+\BD
+\bul perform von Neumann stability analysis for Lax--Friedrichs 
+$$ {\rm e}^{\lambda \Dt} = \cos{(k\Dx)}- {\rm i} \,{v\Dt \over \Dx} \,\sin{(k\Dx)} $$
+\iar \BFblue{conditional stability} requiring Courant number $C$
+$$ C \equiv {|v|\Dt \over \Dx} \le 1 $$
+\iar limitation of the time step $\Dt$ for a given resolution $\Dx$
+\iar \BFblue{Courant--Friedrichs--Lewy} condition (1928)
+\iar necessary (not sufficient) condition for stability!
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Central FD method}
+
+\BD
+\bul in $(x,t)$ space, we identify {\bf stencil} of a method
+\iar stencils visualizes discrete dependence of method \hfill \\
+\centerline{\yellowbx{\includegraphics[height=2.5cm,width=10cm,clip=]{figures/Fig15-14top}}}
+\iar stencil for FTCS (a) versus Lax-Friedrichs (b)
+\pause
+\bul \BFblue{hyperbolic} PDE and \BFblue{physical characteristics}
+\iar the advection equation is hyperbolic as
+$$ \deldelt{u} + \deldelx{\left(\underbrace{v u}_{\Blue{F}}\right)}=0 $$
+and Flux Jacobian $\frac{\partial \Blue{F}}{\partial u}= v$ is real number, `characteristic speed'
+\iar $x-t$ curves given by $\xi=x-vt$ yield $d\,u=0$ or $u$ constant
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Truncation error and order of accuracy}
+
+\BD
+\bul for second order wave equation
+$$ \deldeltt{u}- v^2 \deldelxx{u} = 0 $$
+\iar factorizes to
+$$ \left(\deldelt{}- v \deldelx{}\right)\left(\deldelt{}+ v \deldelx{}\right) u = 0 $$
+\iar general solution has left and right going wave with
+$$ u= f(x-v t) + g(x+v t) $$
+\iar initial shapes $f(x)$, $g(x)$ combine 
+\iar 2 characteristics $\frac{dx}{dt}=\pm v$
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Consistency of a FDA w/ respect to its PDE}
+
+\BD
+\bul illustrate CFL for second order wave equation:
+\hfill \\
+\BFred{the domain of dependence of the differential equation should be contained in the DOD of the discretised equations} \hfill \\
+\yellowbx{\includegraphics[height=4cm,width=10cm,clip=]{figures/Fig15-15}}
+\iar stability means physical DOD contained in stencil bounds (numerical DOD), hence $\Delta t$ small enough (right case)
+\pause
+\bul note: linear advection $+$ wave equation: DOD only involves 1 or 2 points from $t=0$
+$\leftrightarrow$ HD: DOD bounds set by $v\pm c_s$ with $c_s$ sound speed, delimits $t=0$ interval
+\ED
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Time advance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Von Neumann stability analysis}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Principle and necessary stability condition}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Convergence : Lax-Richtmeyer theorem}
+
+\BD
+\bul von Neumann stability analysis for BTCS scheme
+$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
+\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
+\vspace*{0.5cm}
+\bul note: \BFblue{stability does not imply accuracy}
+\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
+\bul implicit backward Euler: first order in time
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Explicit linear schemes}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Lax-Friedrichs}
+
+\BD
+\bul spatial differences as average of $n$-th and $(n+1)$-th time step
+$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
+\iar second order \BFred{Crank--Nicolson method}
+\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
+\vspace*{0.5cm}
+\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
+\centerline{\yellowbx{\includegraphics[height=3cm]{figures/Fig15-17}}}
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Lax-Wendroff}
+
+\BD
+\bul spatial differences as average of $n$-th and $(n+1)$-th time step
+$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
+\iar second order \BFred{Crank--Nicolson method}
+\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
+\vspace*{0.5cm}
+\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
+\centerline{\includegraphics[height=3cm]{figures/Fig15-17}}
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Runge-Kutta}
+
+\BD
+\bul spatial differences as average of $n$-th and $(n+1)$-th time step
+$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
+\iar second order \BFred{Crank--Nicolson method}
+\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
+\vspace*{0.5cm}
+\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
+\centerline{\includegraphics[height=3cm]{figures/Fig15-17}}
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Upwind FD scheme}
+
+\BD
+\bul spatial differences as average of $n$-th and $(n+1)$-th time step
+$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
+\iar second order \BFred{Crank--Nicolson method}
+\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
+\vspace*{0.5cm}
+\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
+\centerline{\includegraphics[height=3cm]{figures/Fig15-17}}
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}

@@ -1,0 +1,48 @@
+\beamer@endinputifotherversion {3.36pt}
+\headcommand {\slideentry {0}{0}{1}{1/1}{}{0}}
+\headcommand {\beamer@framepages {1}{1}}
+\headcommand {\slideentry {0}{0}{2}{2/2}{}{0}}
+\headcommand {\beamer@framepages {2}{2}}
+\headcommand {\slideentry {0}{0}{3}{3/3}{}{0}}
+\headcommand {\beamer@framepages {3}{3}}
+\headcommand {\sectionentry {1}{Spatial discretization}{4}{Spatial discretization}{0}}
+\headcommand {\beamer@sectionpages {1}{3}}
+\headcommand {\beamer@subsectionpages {1}{3}}
+\headcommand {\slideentry {1}{0}{1}{4/4}{}{0}}
+\headcommand {\beamer@framepages {4}{4}}
+\headcommand {\beamer@subsectionentry {0}{1}{1}{5}{Mesh and data collocation}}\headcommand {\beamer@subsectionpages {4}{4}}
+\headcommand {\slideentry {1}{1}{1}{5/5}{Mesh and data collocation}{0}}
+\headcommand {\beamer@framepages {5}{5}}
+\headcommand {\beamer@subsectionentry {0}{1}{2}{6}{Discrete equations}}\headcommand {\beamer@subsectionpages {5}{5}}
+\headcommand {\slideentry {1}{2}{1}{6/6}{Discrete equations}{0}}
+\headcommand {\beamer@framepages {6}{6}}
+\headcommand {\slideentry {1}{2}{2}{7/7}{Discrete equations}{0}}
+\headcommand {\beamer@framepages {7}{7}}
+\headcommand {\slideentry {1}{2}{3}{8/8}{Discrete equations}{0}}
+\headcommand {\beamer@framepages {8}{8}}
+\headcommand {\slideentry {1}{2}{4}{9/9}{Discrete equations}{0}}
+\headcommand {\beamer@framepages {9}{9}}
+\headcommand {\sectionentry {2}{Time advance}{10}{Time advance}{0}}
+\headcommand {\beamer@sectionpages {4}{9}}
+\headcommand {\beamer@subsectionpages {6}{9}}
+\headcommand {\slideentry {2}{0}{1}{10/10}{}{0}}
+\headcommand {\beamer@framepages {10}{10}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{11}{Von Neumann stability analysis}}\headcommand {\beamer@subsectionpages {10}{10}}
+\headcommand {\slideentry {2}{1}{1}{11/11}{Von Neumann stability analysis}{0}}
+\headcommand {\beamer@framepages {11}{11}}
+\headcommand {\slideentry {2}{1}{2}{12/12}{Von Neumann stability analysis}{0}}
+\headcommand {\beamer@framepages {12}{12}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{13}{Explicit linear schemes}}\headcommand {\beamer@subsectionpages {11}{12}}
+\headcommand {\slideentry {2}{2}{1}{13/13}{Explicit linear schemes}{0}}
+\headcommand {\beamer@framepages {13}{13}}
+\headcommand {\slideentry {2}{2}{2}{14/14}{Explicit linear schemes}{0}}
+\headcommand {\beamer@framepages {14}{14}}
+\headcommand {\slideentry {2}{2}{3}{15/15}{Explicit linear schemes}{0}}
+\headcommand {\beamer@framepages {15}{15}}
+\headcommand {\slideentry {2}{2}{4}{16/16}{Explicit linear schemes}{0}}
+\headcommand {\beamer@framepages {16}{16}}
+\headcommand {\beamer@partpages {1}{16}}
+\headcommand {\beamer@subsectionpages {13}{16}}
+\headcommand {\beamer@sectionpages {10}{16}}
+\headcommand {\beamer@documentpages {16}}
+\headcommand {\def \inserttotalframenumber {16}}
