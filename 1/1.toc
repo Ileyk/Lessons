@@ -3,8 +3,9 @@
 \beamer@sectionintoc {1}{Conservation laws}{5}{0}{1}
 \beamer@subsectionintoc {1}{1}{Integral and differential forms}{6}{0}{1}
 \beamer@subsectionintoc {1}{2}{Examples}{10}{0}{1}
-\beamer@sectionintoc {2}{Hyperbolic PDE}{15}{0}{2}
-\beamer@subsectionintoc {2}{1}{Matrix formulation of conservation laws}{16}{0}{2}
-\beamer@subsectionintoc {2}{2}{Time advance}{20}{0}{2}
-\beamer@subsectionintoc {2}{3}{Linear advective equations}{22}{0}{2}
-\beamer@subsectionintoc {2}{4}{The Riemann problem}{25}{0}{2}
+\beamer@sectionintoc {2}{Hyperbolic PDE}{13}{0}{2}
+\beamer@subsectionintoc {2}{1}{System of (1D) 1st order linear PDE}{14}{0}{2}
+\beamer@subsectionintoc {2}{2}{Matrix formulation of conservation laws}{19}{0}{2}
+\beamer@subsectionintoc {2}{3}{Time advance}{21}{0}{2}
+\beamer@subsectionintoc {2}{4}{Linear advection equations}{23}{0}{2}
+\beamer@subsectionintoc {2}{5}{The Riemann problem}{26}{0}{2}

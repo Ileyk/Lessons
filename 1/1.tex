@@ -191,17 +191,18 @@ The Riemann problem
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Conservation form}
+\frametitle{Conservative form}
 
 \BD
 
 \bul Provided the variables $X\left( \mathbf{r}, t \right)$ are XXX differentiable XXX
-$$ \partial_t X + \nabla \cdot \underbrace{ \left[ F\left( X, \mathbf{v}, t \right) \right]}_{\text{fluxes}} = \underbrace{S\left( \mathbf{r}, \mathbf{v}, t \right)}_{sources/sinks} $$
+$$ \partial_t U + \nabla \cdot \underbrace{ \left[ F\left( U \right) \right]}_{\text{fluxes}} = \underbrace{S\left( \mathbf{r}, \mathbf{v}, t \right)}_{sources/sinks} $$
+\iar Matrix formulation
 
 \bul Properties of this differential form
 \iar Coordinate / dimension independent formulation % beware the nabla operator though!
 \iar Given inital and boundary conditions, can provide a general solution
-\iar Conservation form : Green-Ostrogradsky (or Gauss) law and Eulerian approach
+\iar Conservative form : Green-Ostrogradsky (or Gauss) law and Eulerian approach
 \iar Conservative variables : $\rho$, $\rho\mathbf{v}$ and $e$
 
 \ED
@@ -268,7 +269,8 @@ $$\rho \left(x,t\right) = r\left(k,t\right) e^{ikx}$$
 XXX
 \iar non-dissipative
 \iar non-dispersive
-\iar see also DB1#32-33
+\iar see also DB1\#32-33
+\bul Analytic preliminary analysis => mathematical properties of the PDE => appropriate numerical scheme
 
 \bul Numerical solution
 
@@ -309,73 +311,169 @@ $$\mathbf{\nabla}\wedge\mathbf{B}-\partial_t\left((\mathbf{\nabla}\wedge\mathbf{
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Hyperbolic PDE}
+\section{Constant coefficients linear hyperbolic PDE}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Linear system of PDE}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Flux Jacobian}
-
-\bul Consider the linear advection equation :
-$$\partial_t \rho+ v \partial_x \rho =0$$
-
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Linearization of non-linear PDE}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Matrix formulation of conservation laws}
+\subsection{Classifications of PDE}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Flux Jacobian}
+\frametitle{Linear, non-linear, quasi-linear}
 
-\bul In matrix form, the 1D conservation laws without source terms are written :
-$$ \partial_t U + \partial_x \left[ XXX \mathbf{F}\left( U \right) \right]=0$$
-where 
-$$\mathbf{U}=\left(\rho,\rho v,e \right)$$
-and the vector of fluxes is :
+\BD
+
+\bul Homogeneous
 \begin{equation}
-\begin{aligned}
-  \mathbf{F} \colon \mathbb{R}^3 &\to \mathbb{M}_{3,1}\\
-  \mathbf{U} \mapsto &\mathbb{F}(\mathbf{U})=\left(
-\begin{array}{c}
-\rho\mathbf{v}\\
-\rho\mathbf{v}\mathop{\otimes}\mathbf{v}+P\mathbb{1}\\
-\left(e+P\right)\mathbf{v}\\
-\end{array}
-\right)
-\end{aligned}
+\partial_t \mathbf{U} + \mathbf{A}\left(\mathbf{U},x,t\right) \partial_x \mathbf{U} = \mathbf{0}
+\label{eq:QL_form}
 \end{equation}
 
+XXX Choice diagram XXX
 
-\bul Chain rule
-$$ \partial_t \mathbf{U} + \mathbf{AXXX} \left( \mathbf{U} \right) \partial_x  \mathbf{U} =0$$
-with $\mathbf{AXXX} \left( \mathbf{U} \right)$ the Jacobian matrix :
-$$ \mathbf{AXXX} = \partial \mathbf{F} / \partial \mathbf{U} $$
-\iar similar to linear advection % quasi-linear form
+\bul Non-homogeneous : $...+\mathbf{B}\left(\mathbf{U},x,t\right)=\mathbf{0}$
+\iar still linear if $\mathbf{B}\propto\mathbf{U}$
 
-% And in 3D? Is F still a vector?
+Time and space dependent linear advection equation? % L w/ var coeff
+Burgers equation? % QL
+Conservation equations? % QL non homogeneous if source terms
 
-% Write the linear advection and Burgers equation in quasi-linear form. What are their Jacobians?
+Toro 2.1 p.42
+
+\bul Systematic way to solve quasi-linear PDE?
+
+\ED
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Eigenvalues \& eigenvectors}
 
+\bul Consider the following system of linear constant coeff. PDE : 
+\begin{equation}
+\begin{aligned}
+\partial_t \rho_1 + \partial \left( \rho_1 a_{11} + \rho_2 a_{12} \right) = 0 \\
+\partial_t \rho_2 + \partial \left( \rho_1 a_{21} + \rho_2 a_{22} \right) = 0
+\end{aligned}
+\label{eq:2fluids_adv}
+\end{equation}
+
+\iar Linear? Homogeneous? % yes
+\iar Matrix form $\partial_t \mathbf{U}+\XXX{A} \partial_x \mathbf{U}$?
+\iar $\XXX{A}$ diagonalisable? 
+\iar Diagonal matrix $\XXX{D}$?
+\iar Eigenvector matrix $\XXX{K}$ such as $\XXX{A}=\XXX{K}\XXX{D}\XXX{K}^{—1}$?
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Hyperbolic, parabolic and elliptic PDE}
 
+\bul Elliptic <=> complex eigenvalues
+\iar \underline{ex:} Cauchy-Riemann equations (2D steady)
+\begin{equation*}
+\begin{aligned}
+\partial_x u - \partial_y v = 0 \\
+\partial_x v + \partial_y u = 0
+\end{aligned}
+\end{equation}
+
+\bul Hyperbolic <=> real eigenvalues and linearly independent eigenvectors
+\iar eigenvalues $\lambda_i$ as wave speeds
+\iar Was \eqref{eq:2fluids_adv} hyperbolic? % Yes
+
+\bul Systematic way to solve \textit{hyperbolic} quasi-linear PDE?
+
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Linear, non-linear \& quasi-linear}
+\frametitle{General solutions}
+
+Toro 2.3.1
+
+\bul If \textit{linear constant coeff.}, the procedure is the following
+
+$\XXX{K}^{-1}\times$\eqref{eq:QL_form} => canonical form :
+$$ \partial_t \mathbf{V} + \XXX{D} \partial_x \mathbf{V} = 0 $$
+with the characteristic variables or \textit{waves} :
+\begin{equation}
+V=\XXX{K}^{-1}\mathbf{U}
+\label{eq:V_to_U}
+\end{equation} 
+
+Given initial conditions $\mathbf{U} \left( x, 0)$, $\mathbf{V}$ basis of decoupled linear advection solutions :
+$$ V_i \left( x, t \right) = V_i \left( x-\lambda_i t\right, 0) $$
+whose linear superposition via \eqref{eq:V_to_U} provides, the general solution
+
+\iar In \eqref{eq:2fluids_adv}, what if $a_{11}$ and $a_{22}=0$? What if $a_{12}=a_{21}$?
+
+\iar Exo: section 6.3 of Leveque
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linearization of non-linear PDE}
+
+\BD
+
+Leveque 6.4
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Matrix formulation of conservation laws}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Flux Jacobian matrix}
+
+\BD
+
+\bul In matrix form, the 1D conservation laws without source terms are written :
+$$ \partial_t \mathbf{U} + \partial_x \left[ XXX \mathbf{F}\left( \mathbf{U} \right) \right]=0$$
+where 
+$$\mathbf{U}=\left(\rho,\rho v,e \right)$$
+and the vector of fluxes is :
+\begin{equation*}
+\XXX{F}(\mathbf{U})=\left(
+\begin{array}{c}
+\rho\mathbf{v}\\
+\rho\mathbf{v}\mathop{\otimes}\mathbf{v}+P\mathbb{1}\\
+\left(e+P\right)\mathbf{v}\\
+\end{array}
+\right)
+%\begin{aligned}
+%  \mathbf{F} \colon \mathbb{R}^3 &\to \mathbb{M}_{3,1}\\
+%  \mathbf{U} \mapsto &\mathbb{F}(\mathbf{U})=\left(
+%\begin{array}{c}
+%\rho\mathbf{v}\\
+%\rho\mathbf{v}\mathop{\otimes}\mathbf{v}+P\mathbb{1}\\
+%\left(e+P\right)\mathbf{v}\\
+%\end{array}
+%\right)
+%\end{aligned}
+\end{equation*}
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Flux Jacobian matrix}
+
+\BD
+
+\bul Chain rule => quasi-linear form
+\begin{equation}
+\partial_t \mathbf{U} + \mathbf{AXXX} \left( \mathbf{U} \right) \partial_x  \mathbf{U} =0
+\end{equation}
+with $\mathbf{AXXX} \left( \mathbf{U} \right)$ the flux Jacobian matrix :
+$$ \mathbf{AXXX} = \partial \mathbf{F} / \partial \mathbf{U} $$
+\iar conservation equations are quasi-linear % quasi-linear form
+
+% And in 3D? Is F still a vector?
+
+% Write the linear advection and Burgers equation in quasi-linear form. What are their Jacobians?
+
+\ED
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -393,7 +491,7 @@ $$ \mathbf{AXXX} = \partial \mathbf{F} / \partial \mathbf{U} $$
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Linear advective equations}
+\subsection{Linear advection equations}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Properties}
