@@ -376,7 +376,6 @@ $$ u^{n+1}_i = \textcolor{red}{u^n_{i+1} + u^n_{i-1} \over 2} - v \,{\Dt \over \
 which can be rearranged to form
 $$ {u^{n+1}_i -u^n_i\over\Dt}= -v\,{u^n_{i+1} - u^n_{i-1} \over 2\Dx} + {(\Dx)^2 \over 2\Dt} \,{u^n_{i+1} - 2u^n_i + u^n_{i-1} \over (\Dx)^2} $$
 \iar numerical dissipation with ${\cal D}\equiv {(\Dx)^2 / 2\Dt}$
-\iar 1$^{\text{st}}$ order accurate in time, 2$^{\text{nd}}$ order in space
 
 \ED
 
@@ -402,23 +401,6 @@ $$ C \equiv {|v|\Dt \over \Dx} \le 1 $$
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{The Lax-Wendroff scheme}
-
-\BD
-
-\bul Lax-Friedrichs has different o.a. in space (2$^{\text{nd}}$) and time (1$^{\text{st}}$) 
-\iar Taylor expansion in time suggests :
-$$ u^{n+1}_i = u^n_i - \half{\Dt \over \Dx}\,v \,(u^n_{i+1} - u^n_{i-1}) + \half {(\Dt)^2 \over (\Dx)^2} \,v^2 \,(u^n_{i+1} - 2 u^n_i + u^n_{i-1}) $$
-\iar 2$^{\text{nd}}$ order in space and in time
-
-\bul Conditionally stable
-\iar for $\Dt = \Dx / v$, we retrieve the Lax-Friedrichs scheme
-
-\ED
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
 \frametitle{Space-time symmetry}
 
 \BD
@@ -426,12 +408,11 @@ $$ u^{n+1}_i = u^n_i - \half{\Dt \over \Dx}\,v \,(u^n_{i+1} - u^n_{i-1}) + \half
 \bul How to maintain the space-time symmetry of the PDE in the FD approximation?
 \iar use central discretisation for both time and space
 \iar leapfrog scheme
-$$ u^{n+1}_i = u^{\textcolor{red}{n-1}}_i - v \,{\Dt \over \Dx} \,{u^n_{i+1} - u^n_{i-1} \over 2}$$
+$$ u^{n+1}_i = u^{\textcolor{red}{n-1}}_i - v \,{\Dt \over \Dx} \,{u^n_{i+1} - u^n_{i-1} \over 2$$
 \iar conditionally stable and second-order accurate
 \iar multiple time levels involved: $n-1$, $n$, $n+1$
-\iar potential problem: even/odd time levels may 'decouple' 
+\iar potential problem: even/oneven time levels may `decouple' 
 
-\bul stencil of leapfrog on slide \ref{fig:FD_explicit_methods}
 
 \ED
 

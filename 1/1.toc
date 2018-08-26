@@ -1,11 +1,10 @@
 \beamer@endinputifotherversion {3.36pt}
 \select@language {dutch}
 \beamer@sectionintoc {1}{Conservation laws}{5}{0}{1}
-\beamer@subsectionintoc {1}{1}{Integral and differential forms}{6}{0}{1}
-\beamer@subsectionintoc {1}{2}{Examples}{10}{0}{1}
-\beamer@sectionintoc {2}{Hyperbolic PDE}{13}{0}{2}
-\beamer@subsectionintoc {2}{1}{System of (1D) 1st order linear PDE}{14}{0}{2}
-\beamer@subsectionintoc {2}{2}{Matrix formulation of conservation laws}{19}{0}{2}
-\beamer@subsectionintoc {2}{3}{Time advance}{21}{0}{2}
-\beamer@subsectionintoc {2}{4}{Linear advection equations}{23}{0}{2}
-\beamer@subsectionintoc {2}{5}{The Riemann problem}{26}{0}{2}
+\beamer@subsectionintoc {1}{1}{Integral form}{6}{0}{1}
+\beamer@subsectionintoc {1}{2}{Differential forms}{7}{0}{1}
+\beamer@subsectionintoc {1}{3}{Examples}{10}{0}{1}
+\beamer@sectionintoc {2}{Hyperbolic PDE}{15}{0}{2}
+\beamer@subsectionintoc {2}{1}{Classifications of PDE}{16}{0}{2}
+\beamer@subsectionintoc {2}{2}{Matrix formulation of conservation laws}{23}{0}{2}
+\beamer@subsectionintoc {2}{3}{The Riemann problem}{27}{0}{2}

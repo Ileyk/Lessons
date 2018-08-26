@@ -31,6 +31,10 @@
 \usepackage[absolute,overlay]{textpos}
 \usepackage{colortbl}
 \usepackage{multimedia}
+\usepackage{bm}
+\usepackage{amsbsy}
+\usepackage{bbold}
+\usepackage{minibox}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -63,6 +67,8 @@
 \newcommand*{\aka}{a.k.a. \@\xspace}
 \newcommand*\diff{\mathop{}\!\mathrm{d}}
 \newcommand*{\msun}{$M_{\odot}$\@\xspace}
+\newcommand*{\rtt}[1]{\boldsymbol{\overline{\overline{#1}}}}
+\newcommand*{\rttt}[1]{\bar{\bar{#1}}}
 
 \setcounter{tocdepth}{1}
 
@@ -129,8 +135,8 @@ KU Leuven
 
 \bul \BF{Books} \hfill \\
 - \href{http://www.beck-shop.de/fachbuch/leseprobe/9783540252023_Excerpt_001.pdf}{\textit{Riemann solvers and numerical methods for fluid dynamics - A practical introduction}}, by Toro\\
-- \href{https://pdfs.semanticscholar.org/1470/c6f43c769572c4cfc94ffc9c5710484ff1e5.pdf}{\textit{Numerical methods for conservation laws}}, by Leveque\\
-- \href{http://www.tevza.org/home/course/modelling-II_2016/books/Leveque\%20-\%20Finite\%20Volume\%20Methods\%20for\%20Hyperbolic\%20Equations.pdf}{\textit{Finite volume methods for hyperbolic problems}}, by Leveque
+- \href{https://pdfs.semanticscholar.org/1470/c6f43c769572c4cfc94ffc9c5710484ff1e5.pdf}{\textit{Numerical methods for conservation laws}}, by Leveque (Leveque1)\\
+- \href{http://www.tevza.org/home/course/modelling-II_2016/books/Leveque\%20-\%20Finite\%20Volume\%20Methods\%20for\%20Hyperbolic\%20Equations.pdf}{\textit{Finite volume methods for hyperbolic problems}}, by Leveque (Leveque2)
 
 \bul \BF{Courses} \hfill \\
 - Rony Keppens \& Jon Sundqvist 2016-2017\\
@@ -145,7 +151,7 @@ KU Leuven
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \begin{center}
-  \framebox[.8\textwidth]{\color{darkred}{\textbf{Lesson 1 : Hyperbolic Partial Differential Equations}}}
+  \minibox[frame,c]{\color{darkred}{Lesson 1 : Hyperbolic Partial Differential Equations}}
 \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -168,10 +174,10 @@ The Riemann problem
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conservation laws}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Integral and differential forms}
+\subsection{Integral form}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Integral form}
+\frametitle{Integral forms}
 
 \BD
 
@@ -180,22 +186,26 @@ The Riemann problem
 \iar analogy with moments of the specific photon intensity (see Prof. Sundqvist's course)
 
 \bul Consider \BF{any volume element} $\diff V$ of a fluid
-\iar XXX bilan XXX over $\diff t$ of scalar quantity : inflow/outflow, sinks/sources
+\iar balance over $\diff t$ of scalar quantity : inflow/outflow, sinks/sources
 \iar for the momentum : tensor formulation and dyadic product
 \iar for energy
 
 \bul Shocks and jump conditions : Rankine-Hugoniot
 
+\bul See Toro 2.4.1
+
 \ED
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Differential forms}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Conservative form}
 
 \BD
 
-\bul Provided the variables $X\left( \mathbf{r}, t \right)$ are XXX differentiable XXX
+\bul Provided the variables $U\left( \mathbf{r}, t \right)$ are differentiable
 $$ \partial_t U + \nabla \cdot \underbrace{ \left[ F\left( U \right) \right]}_{\text{fluxes}} = \underbrace{S\left( \mathbf{r}, \mathbf{v}, t \right)}_{sources/sinks} $$
 \iar Matrix formulation
 
@@ -203,7 +213,7 @@ $$ \partial_t U + \nabla \cdot \underbrace{ \left[ F\left( U \right) \right]}_{\
 \iar Coordinate / dimension independent formulation % beware the nabla operator though!
 \iar Given inital and boundary conditions, can provide a general solution
 \iar Conservative form : Green-Ostrogradsky (or Gauss) law and Eulerian approach
-\iar Conservative variables : $\rho$, $\rho\mathbf{v}$ and $e$
+\iar Conservative variables : $\rho$, $\rho\mathbf{v}$ and $e$ (\textit{total} energy)
 
 \ED
 
@@ -214,13 +224,11 @@ $$ \partial_t U + \nabla \cdot \underbrace{ \left[ F\left( U \right) \right]}_{\
 
 \BD
 
-\bul Lagrangian approach
-XXX Picture of a parachute XXX
+\bul Lagrangian approach % parachute
 $$ D_t \left( \cdot \right) = \partial_t \left( \cdot \right) + \mathbf{v} \nabla \left( \cdot \right) $$
 % beware the \mathbf{v} \nabla operator
 
-\bul Continuity equation
-$$ D_t \left( \rho \right) = - \rho \nabla \mathbf{v} $$
+\bul Continuity equation : $ D_t \left( \rho \right) = - \rho \nabla \mathbf{v} $
 \iar incompressible fluid $\neq$ flow
 
 \bul Navier-Stokes equation
@@ -230,6 +238,8 @@ $$ \rho D_t \left( \mathbf{v} \right) = - \nabla P $$
 \iar internal and mechanical energy % the system has internal structure (/= point mechanics)
 \iar link w/ 1$^{st}$ principle of Thermodynamics
 \iar entropy formulation
+
+\bul Primitive variables : $\rho$,$\mathbf{v}$,$P$
 
 \ED
 
@@ -266,10 +276,9 @@ $$\partial_t \rho+ v \partial_x \rho =0$$
 $$\rho(x,t)=\rho_0(x-vt)$$
 \bul Fourier analysis
 $$\rho \left(x,t\right) = r\left(k,t\right) e^{ikx}$$
-XXX
 \iar non-dissipative
 \iar non-dispersive
-\iar see also DB1\#32-33
+\iar see also Balsara 1 (slides\#32-33)
 \bul Analytic preliminary analysis => mathematical properties of the PDE => appropriate numerical scheme
 
 \bul Numerical solution
@@ -282,12 +291,46 @@ XXX
 \frametitle{Euler equations}
 
 \BD
-\bul Consider the viscous tensor $\XXX{\tau}$
-$$\XXX{\tau}=\mu\left[\left(\nablaXXX \mathbf{v} +\nablaXXX \mathbf{v}^t \right) - \frac{2}{3} \left(\nabla\cdot\mathbf{v}\mathbb{1}\right)\right]$$
-\iar see Landau Lifschitz section XXX for hypothesis \& shape
-\iar $\mu$ dynamic viscosity in XXX
+
+\bul 2 scalar variables ($\rho$ \& e) $+$ 1 vector ($\rho \mathbf{v}$) $=$ \textcolor{blue}{5} variables 
+
+\bul Conservative form $ \partial_t \mathbf{U} + \nabla \cdot \rtt{F} = \mathbf{0} $ with, in \textcolor{red}{3}D :
+
+\begin{align} 
+\mathbf{U}&= \begin{bmatrix}
+\rho\\
+\rho \mathbf{v}\\
+e=u+\rho \mathbf{v}^2/2
+\end{bmatrix}
+\quad
+\text{and}
+\quad
+\rtt{F}&= \begin{bmatrix}
+\rho \mathbf{v}\\
+\rho \mathbf{v}\otimes\mathbf{v}^{\text{T}} + P \rtt{\mathbb{1}} \\
+\left(e+P\right)\mathbf{v}
+\end{bmatrix}
+\end{align}
+
+with $\rtt{F}$ a \textcolor{blue}{5} rows $\times$ \textcolor{red}{3} columns matrix 
+\iar beware the divergence operator! Retrieve primitive form
+
+\bul in Cartesian? in cylindrical? in spherical? % differential geometry and booklets
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Navier-Stokes equations}
+
+\BD
+\bul Consider the viscous tensor $\rtt{\tau}$
+$$\rtt{\tau}=\mu\left[\left(\rtt{\nabla \mathbf{v}} +\rtt{\nabla \mathbf{v}^t} \right) - \frac{2}{3} \left(\nabla\cdot\mathbf{v}\right)\rtt{\mathbb{1}}\right]$$
+\iar see \href{http://users-phys.au.dk/srf/hydro/Landau+Lifschitz.pdf}{Landau Lifschitz} 2.15 for hypothesis \& shape
+\iar $\mu$ dynamic viscosity in Pa$\cdot$s, intrinsic
 \iar conservative formulation
-\iar Dimensionless form, Reynolds number and singular limit (Lagrange paradox? XXX)
+\iar Dimensionless form, Reynolds number and singular limit (D'Alembert's paradox)
 \ED
 
 \end{frame}
@@ -300,18 +343,48 @@ $$\XXX{\tau}=\mu\left[\left(\nablaXXX \mathbf{v} +\nablaXXX \mathbf{v}^t \right)
 $$ \mathbf{E}+\mathbf{j}\wedge\mathbf{B}=\mathbf{0} $$
 \iar $\mathbf{E}$ secondary variable 
 
-\bul Maxwell-Faraday and Maxwell-Amp\`{e}re give the induction equation XXX :
-$$\mathbf{\nabla}\wedge\mathbf{B}-\partial_t\left((\mathbf{\nabla}\wedge\mathbf{B})\wedge\mathbf{B}\right)=\mathbf{0}$$
-\iar magnetic pressure and XXX Prandtl XXX number
+\bul Maxwell-Faraday and Maxwell-Amp\`{e}re give the induction equation :
+$$\partial_t \mathbf{B} = \mathbf{\nabla}\wedge\left(\mathbf{v}\wedge\mathbf{B}\right)$$
+
+\iar magnetic pressure and magnetic $\beta$ number
 \iar magnetic tension
 
 \bul Frozen-flux theorem
 
 \ED
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Ideal Magneto-Hydrodynamics equations}
+
+\BD
+
+\bul 2 scalar variables ($\rho$ \& e) $+$ 2 vectors ($\rho \mathbf{v}$ and $\mathbf{B}$) $=$ 8 variables 
+
+\bul Conservative form $ \partial_t \mathbf{U} + \nabla \cdot \rtt{F} = \mathbf{0} $ with, in 3D :
+
+\begin{align} 
+\mathbf{U}&= \begin{bmatrix}
+\rho\\
+\rho \mathbf{v}\\
+e=u+\rho \mathbf{v}^2/2+\mathbf{B}^2/2
+\mathbf{B}
+\end{bmatrix}
+\end{align}
+\begin{align} 
+\rtt{F}&= \begin{bmatrix}
+\rho \mathbf{v}\\
+\rho \mathbf{v}\otimes\mathbf{v}^{\text{T}} + \left(P+\mathbf{B}^2/2\right)\rtt{\mathbb{1}} - \mathbf{B}\otimes\mathbf{B}^{\text{T}} \\
+\left(e+P+\mathbf{B}^2/2\right)\mathbf{v}-\left(\mathbf{v}\cdot\mathbf{B}\right)\mathbf{B}\\
+\mathbf{v}\mathbf{B}^{\text{T}}-\mathbf{B}\mathbf{v}^{\text{T}}
+\end{bmatrix}
+\end{align}
+
+\ED
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Constant coefficients linear hyperbolic PDE}
+\section{Hyperbolic PDE}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Classifications of PDE}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -322,20 +395,35 @@ $$\mathbf{\nabla}\wedge\mathbf{B}-\partial_t\left((\mathbf{\nabla}\wedge\mathbf{
 
 \bul Homogeneous
 \begin{equation}
-\partial_t \mathbf{U} + \mathbf{A}\left(\mathbf{U},x,t\right) \partial_x \mathbf{U} = \mathbf{0}
+\partial_t \mathbf{U} + \rtt{A}\left(\mathbf{U},x,t\right) \partial_x \mathbf{U} = \mathbf{0}
 \label{eq:QL_form}
 \end{equation}
 
-XXX Choice diagram XXX
+\bul Nature of the PDE
+%$$\partial_{\mathbf{U}}\rtt{A}$$
+%$$\partial_{x,t}\rtt{A}$$
+%$\rtt{A}\left(\mathbf{U}\right)$
+
+\begin{center}
+\includegraphics[width=6.25cm,height=4cm]{figures/flowchart}
+\end{center}
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Linear, non-linear, quasi-linear}
+
+\BD
 
 \bul Non-homogeneous : $...+\mathbf{B}\left(\mathbf{U},x,t\right)=\mathbf{0}$
 \iar still linear if $\mathbf{B}\propto\mathbf{U}$
 
-Time and space dependent linear advection equation? % L w/ var coeff
-Burgers equation? % QL
-Conservation equations? % QL non homogeneous if source terms
-
-Toro 2.1 p.42
+\bul Exemples :
+\iar Time and space dependent linear advection equation? % L w/ var coeff
+\iar Burgers equation? % QL
+\iar Conservation equations? % QL non homogeneous if source terms
 
 \bul Systematic way to solve quasi-linear PDE?
 
@@ -346,9 +434,11 @@ Toro 2.1 p.42
 \begin{frame}
 \frametitle{Eigenvalues \& eigenvectors}
 
+\BD
+
 \bul Consider the following system of linear constant coeff. PDE : 
 \begin{equation}
-\begin{aligned}
+\left\{\begin{aligned}
 \partial_t \rho_1 + \partial \left( \rho_1 a_{11} + \rho_2 a_{12} \right) = 0 \\
 \partial_t \rho_2 + \partial \left( \rho_1 a_{21} + \rho_2 a_{22} \right) = 0
 \end{aligned}
@@ -356,65 +446,94 @@ Toro 2.1 p.42
 \end{equation}
 
 \iar Linear? Homogeneous? % yes
-\iar Matrix form $\partial_t \mathbf{U}+\XXX{A} \partial_x \mathbf{U}$?
-\iar $\XXX{A}$ diagonalisable? 
-\iar Diagonal matrix $\XXX{D}$?
-\iar Eigenvector matrix $\XXX{K}$ such as $\XXX{A}=\XXX{K}\XXX{D}\XXX{K}^{—1}$?
+\iar Matrix form $\partial_t \mathbf{U} + \mathbf{A} \partial_x \mathbf{U}$?
+\iar $\mathbf{A}$ diagonalisable? 
+\iar Diagonal matrix $\mathbf{D}$?
+\iar Eigenvector matrix $\mathbf{K}$ such as $\mathbf{A}=\mathbf{K} \mathbf{D} \mathbf{K}^{-1}$?
+
+\ED
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Hyperbolic, parabolic and elliptic PDE}
+\frametitle{Hyperbolic and elliptic 1st order PDE}
 
-\bul Elliptic <=> complex eigenvalues
-\iar \underline{ex:} Cauchy-Riemann equations (2D steady)
-\begin{equation*}
-\begin{aligned}
-\partial_x u - \partial_y v = 0 \\
-\partial_x v + \partial_y u = 0
-\end{aligned}
-\end{equation}
+\BD
 
-\bul Hyperbolic <=> real eigenvalues and linearly independent eigenvectors
+\bul Hyperbolic <=> $\mathbf{A}$ diagonisable and real eigenvalues
 \iar eigenvalues $\lambda_i$ as wave speeds
 \iar Was \eqref{eq:2fluids_adv} hyperbolic? % Yes
 
 \bul Systematic way to solve \textit{hyperbolic} quasi-linear PDE?
+
+\bul \underline{Rk :} Elliptic <=> $\mathbf{A}$ has non-real eigenvalues
+\iar \underline{ex:} Cauchy-Riemann equations (2D steady)
+\begin{equation*}
+\left\{\begin{aligned}
+\partial_x u - \partial_y v = 0 \\
+\partial_x v + \partial_y u = 0
+\end{aligned}
+\end{equation*}
+
+\ED
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{General solutions}
 
-Toro 2.3.1
+\BD
 
-\bul If \textit{linear constant coeff.}, the procedure is the following
+\bul Toro 2.3.1-2 and Balsara 1.5.3
 
-$\XXX{K}^{-1}\times$\eqref{eq:QL_form} => canonical form :
-$$ \partial_t \mathbf{V} + \XXX{D} \partial_x \mathbf{V} = 0 $$
+\bul If \textit{constant coefficient linear} system, the procedure is the following :
+
+\iar $\mathbf{K}^{-1}\times$\eqref{eq:QL_form} => set of independent linear advection solutions, the canonical form :
+$$ \partial_t \mathbf{V} + \mathbf{D} \partial_x \mathbf{V} = 0 $$
 with the characteristic variables or \textit{waves} :
 \begin{equation}
-V=\XXX{K}^{-1}\mathbf{U}
+V=\mathbf{K}^{-1}\mathbf{U}
 \label{eq:V_to_U}
 \end{equation} 
 
-Given initial conditions $\mathbf{U} \left( x, 0)$, $\mathbf{V}$ basis of decoupled linear advection solutions :
-$$ V_i \left( x, t \right) = V_i \left( x-\lambda_i t\right, 0) $$
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{General solutions}
+
+\BD
+
+\iar Given initial conditions $\mathbf{U} \left( x, 0\right)$, $\mathbf{V}$ basis of decoupled linear advection solutions : $ V_i \left( x, t \right) = V_i \left( x-\lambda_i t, 0 \right) $
+
+\begin{center}
+\includegraphics[width=10cm,height=3cm]{figures/linadv2}
+\end{center}
+
 whose linear superposition via \eqref{eq:V_to_U} provides, the general solution
 
 \iar In \eqref{eq:2fluids_adv}, what if $a_{11}$ and $a_{22}=0$? What if $a_{12}=a_{21}$?
 
-\iar Exo: section 6.3 of Leveque
+\ED
 
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Linearization of non-linear PDE}
+\frametitle{General solutions}
 
 \BD
 
-Leveque 6.4
+\bul Examples
+
+\iar the 1D second order wave equation (Leveque1 6.1)
+
+\iar the 2D second order wave equation (Leveque1 6.2)
+
+\iar the \href{https://www.youtube.com/watch?v=AxDQWPOVzEw}{linearized} \href{https://commons.wikimedia.org/wiki/File:Shallow_water_equations_-_one_splash.webm}{shallow water} equations (Leveque1 6.3, Balsara 1.7)
+
+\iar the linearized isothermal HD equations (Toro 2.5, 2.10)
 
 \ED
 
@@ -433,11 +552,11 @@ where
 $$\mathbf{U}=\left(\rho,\rho v,e \right)$$
 and the vector of fluxes is :
 \begin{equation*}
-\XXX{F}(\mathbf{U})=\left(
+\mathbf{F}(\mathbf{U})=\left(
 \begin{array}{c}
-\rho\mathbf{v}\\
-\rho\mathbf{v}\mathop{\otimes}\mathbf{v}+P\mathbb{1}\\
-\left(e+P\right)\mathbf{v}\\
+\rho v\\
+\rho v^2+P\\
+\left(e+P\right)v\\
 \end{array}
 \right)
 %\begin{aligned}
@@ -463,11 +582,19 @@ and the vector of fluxes is :
 
 \bul Chain rule => quasi-linear form
 \begin{equation}
-\partial_t \mathbf{U} + \mathbf{AXXX} \left( \mathbf{U} \right) \partial_x  \mathbf{U} =0
+\partial_t \mathbf{U} + \mathbf{A} \left( \mathbf{U} \right) \partial_x  \mathbf{U} =0
 \end{equation}
-with $\mathbf{AXXX} \left( \mathbf{U} \right)$ the flux Jacobian matrix :
-$$ \mathbf{AXXX} = \partial \mathbf{F} / \partial \mathbf{U} $$
+with $\mathbf{A} \left( \mathbf{U} \right)$ the Jacobian matrix of the flux :
+$$ \mathbf{A} = \partial \mathbf{F} / \partial \mathbf{U} $$
 \iar conservation equations are quasi-linear % quasi-linear form
+
+\bul The Jacobian matrices of the flux for conservative and primitive variables are \textit{similar}
+\iar which eigenvalues for the ideal 2D MHD equations? 
+\iar \underline{hint:} the Jacobian matrix of the flux for primitive variables is, in Cartesian :
+
+\begin{center}
+\includegraphics[width=0.65cm,height=0.5cm]{figures/Jacobian_MHD_primitive}
+\end{center}
 
 % And in 3D? Is F still a vector?
 
@@ -477,34 +604,29 @@ $$ \mathbf{AXXX} = \partial \mathbf{F} / \partial \mathbf{U} $$
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Time advance}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Explicit}
+\frametitle{Linearization of non-linear PDE}
 
+\BD
+
+Good news : $\exists$ Taylor expansion to linearize
+
+Leveque1 6.4
+
+\ED
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Implicit}
+\frametitle{Linearized Euler equations}
 
+\BD
 
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Linear advection equations}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Properties}
+\bul Leveque1 6.4.1
 
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Characteristics}
+\bul Solve for wave-like perturbations (Balsara 1.5.2, 1$^{\text{st}}$ part)
 
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Stencils, domain of dependence, range of influence}
+\ED
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -513,6 +635,135 @@ $$ \mathbf{AXXX} = \partial \mathbf{F} / \partial \mathbf{U} $$
 \begin{frame}
 \frametitle{The Riemann problem}
 
+\BD
+
+\bul Step initial state : $ \mathbf{U}\left(x,t=0\right)=\left\{\begin{matrix}
+\mathbf{U}_{\text{L}} \quad \text{if} x<0 \\
+\mathbf{U}_{\text{R}} \quad \text{if} x>0
+\end{matrix}\right $
+\bul Applied to the \textit{linear advection} equation, $\exists$ analytic solution (Toro 2.2.2, Leveque1 6.5)
+\begin{center}
+\includegraphics[width=4cm,height=4cm]{figures/riemann.pdf}
+\end{center}
+
+\ED
+
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Riemann problem}
+
+\BD
+
+\bul And for a 1D hyperbolic system of 2 linear PDE with constant coefficients (e.g. linearized isothermal gas dynamics, Toro 2.3.4)?  
+\iar Solve the Riemann problem for \eqref{eq:2fluids_adv} with initial state :
+\begin{equation*}
+\left\{\begin{matrix}
+\rho_{1}\left(x,0\right)=\rho_{1,\text{L}} \quad \text{and} \quad \rho_{2}\left(x,0\right)=\rho_{2,\text{L}} \quad \text{for} \quad x<0 \\
+\rho_{1}\left(x,0\right)=\rho_{1,\text{R}} \quad \text{and} \quad \rho_{2}\left(x,0\right)=\rho_{2,\text{R}} \quad \text{for} \quad x>0
+\end{matrix}
+\end{equation*}
+
+\bul Draw explicitly the solution at t$=$1 for the following numerical values :
+\begin{equation*}
+\left\{\begin{matrix}
+\rho_{1,\text{L}}=4\\
+\rho_{1,\text{R}}=1\\
+\rho_{2,\text{L}}=2\\
+\rho_{2,\text{R}}=100
+\end{matrix}
+\quad \text{and} \quad
+\left\{\begin{matrix}
+a_{11}=0.5\\
+a_{12}=1\\
+a_{21}=-1.25\\
+a_{22}=3.5
+\end{matrix}
+\end{equation*}
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Riemann problem}
+
+\BD
+
+\bul For 3 equations, see linearized Euler (Balsara 1.5.2, 2$^{\text{nd}}$ part)
+
+\bul In the general 1D case of N equations, see Toro 2.3.3 and Balsara 3.4.1 and 3.4.2
+
+\bul A 1$^{\text{st}}$ test for a num. solver (e.g. the finite difference method)
+
+\bul At the basis of any finite volume method (i.e. 'on a grid'), where data can be represented as a piecewise constant function
+
+\bul Connection with Rankine-Hugoniot jump conditions at shock
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{And a bit of reading}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+
+\BD
+
+\iar 5 first chapters of Leveque1 
+\iar Next course --> Chapter 10 of Leveque1
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Time advance}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Explicit}
+%
+%\BD
+%
+%\ED
+%
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Implicit}
+%
+%\BD
+%
+%\ED
+%
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\subsection{Linear advection equations}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Properties}
+%
+%\BD
+%
+%\ED
+%
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Characteristics}
+%
+%\BD
+%
+%\ED
+%
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Stencils, domain of dependence, range of influence}
+%
+%\BD
+%
+%\ED
+%
+%\end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

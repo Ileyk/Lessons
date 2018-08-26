@@ -12,60 +12,68 @@
 \headcommand {\beamer@subsectionpages {1}{4}}
 \headcommand {\slideentry {1}{0}{1}{5/5}{}{0}}
 \headcommand {\beamer@framepages {5}{5}}
-\headcommand {\beamer@subsectionentry {0}{1}{1}{6}{Integral and differential forms}}\headcommand {\beamer@subsectionpages {5}{5}}
-\headcommand {\slideentry {1}{1}{1}{6/6}{Integral and differential forms}{0}}
+\headcommand {\beamer@subsectionentry {0}{1}{1}{6}{Integral form}}\headcommand {\beamer@subsectionpages {5}{5}}
+\headcommand {\slideentry {1}{1}{1}{6/6}{Integral form}{0}}
 \headcommand {\beamer@framepages {6}{6}}
-\headcommand {\slideentry {1}{1}{2}{7/7}{Integral and differential forms}{0}}
+\headcommand {\beamer@subsectionentry {0}{1}{2}{7}{Differential forms}}\headcommand {\beamer@subsectionpages {6}{6}}
+\headcommand {\slideentry {1}{2}{1}{7/7}{Differential forms}{0}}
 \headcommand {\beamer@framepages {7}{7}}
-\headcommand {\slideentry {1}{1}{3}{8/8}{Integral and differential forms}{0}}
+\headcommand {\slideentry {1}{2}{2}{8/8}{Differential forms}{0}}
 \headcommand {\beamer@framepages {8}{8}}
-\headcommand {\slideentry {1}{1}{4}{9/9}{Integral and differential forms}{0}}
+\headcommand {\slideentry {1}{2}{3}{9/9}{Differential forms}{0}}
 \headcommand {\beamer@framepages {9}{9}}
-\headcommand {\beamer@subsectionentry {0}{1}{2}{10}{Examples}}\headcommand {\beamer@subsectionpages {6}{9}}
-\headcommand {\slideentry {1}{2}{1}{10/10}{Examples}{0}}
+\headcommand {\beamer@subsectionentry {0}{1}{3}{10}{Examples}}\headcommand {\beamer@subsectionpages {7}{9}}
+\headcommand {\slideentry {1}{3}{1}{10/10}{Examples}{0}}
 \headcommand {\beamer@framepages {10}{10}}
-\headcommand {\slideentry {1}{2}{2}{11/11}{Examples}{0}}
+\headcommand {\slideentry {1}{3}{2}{11/11}{Examples}{0}}
 \headcommand {\beamer@framepages {11}{11}}
-\headcommand {\slideentry {1}{2}{3}{12/12}{Examples}{0}}
+\headcommand {\slideentry {1}{3}{3}{12/12}{Examples}{0}}
 \headcommand {\beamer@framepages {12}{12}}
-\headcommand {\sectionentry {2}{Hyperbolic PDE}{13}{Hyperbolic PDE}{0}}
-\headcommand {\beamer@sectionpages {5}{12}}
-\headcommand {\beamer@subsectionpages {10}{12}}
-\headcommand {\slideentry {2}{0}{1}{13/13}{}{0}}
+\headcommand {\slideentry {1}{3}{4}{13/13}{Examples}{0}}
 \headcommand {\beamer@framepages {13}{13}}
-\headcommand {\beamer@subsectionentry {0}{2}{1}{14}{System of (1D) 1st order linear PDE}}\headcommand {\beamer@subsectionpages {13}{13}}
-\headcommand {\slideentry {2}{1}{1}{14/14}{System of (1D) 1st order linear PDE}{0}}
+\headcommand {\slideentry {1}{3}{5}{14/14}{Examples}{0}}
 \headcommand {\beamer@framepages {14}{14}}
-\headcommand {\slideentry {2}{1}{2}{15/15}{System of (1D) 1st order linear PDE}{0}}
+\headcommand {\sectionentry {2}{Hyperbolic PDE}{15}{Hyperbolic PDE}{0}}
+\headcommand {\beamer@sectionpages {5}{14}}
+\headcommand {\beamer@subsectionpages {10}{14}}
+\headcommand {\slideentry {2}{0}{1}{15/15}{}{0}}
 \headcommand {\beamer@framepages {15}{15}}
-\headcommand {\slideentry {2}{1}{3}{16/16}{System of (1D) 1st order linear PDE}{0}}
+\headcommand {\beamer@subsectionentry {0}{2}{1}{16}{Classifications of PDE}}\headcommand {\beamer@subsectionpages {15}{15}}
+\headcommand {\slideentry {2}{1}{1}{16/16}{Classifications of PDE}{0}}
 \headcommand {\beamer@framepages {16}{16}}
-\headcommand {\slideentry {2}{1}{4}{17/17}{System of (1D) 1st order linear PDE}{0}}
+\headcommand {\slideentry {2}{1}{2}{17/17}{Classifications of PDE}{0}}
 \headcommand {\beamer@framepages {17}{17}}
-\headcommand {\slideentry {2}{1}{5}{18/18}{System of (1D) 1st order linear PDE}{0}}
+\headcommand {\slideentry {2}{1}{3}{18/18}{Classifications of PDE}{0}}
 \headcommand {\beamer@framepages {18}{18}}
-\headcommand {\beamer@subsectionentry {0}{2}{2}{19}{Matrix formulation of conservation laws}}\headcommand {\beamer@subsectionpages {14}{18}}
-\headcommand {\slideentry {2}{2}{1}{19/19}{Matrix formulation of conservation laws}{0}}
+\headcommand {\slideentry {2}{1}{4}{19/19}{Classifications of PDE}{0}}
 \headcommand {\beamer@framepages {19}{19}}
-\headcommand {\slideentry {2}{2}{2}{20/20}{Matrix formulation of conservation laws}{0}}
+\headcommand {\slideentry {2}{1}{5}{20/20}{Classifications of PDE}{0}}
 \headcommand {\beamer@framepages {20}{20}}
-\headcommand {\beamer@subsectionentry {0}{2}{3}{21}{Time advance}}\headcommand {\beamer@subsectionpages {19}{20}}
-\headcommand {\slideentry {2}{3}{1}{21/21}{Time advance}{0}}
+\headcommand {\slideentry {2}{1}{6}{21/21}{Classifications of PDE}{0}}
 \headcommand {\beamer@framepages {21}{21}}
-\headcommand {\slideentry {2}{3}{2}{22/22}{Time advance}{0}}
+\headcommand {\slideentry {2}{1}{7}{22/22}{Classifications of PDE}{0}}
 \headcommand {\beamer@framepages {22}{22}}
-\headcommand {\beamer@subsectionentry {0}{2}{4}{23}{Linear advection equations}}\headcommand {\beamer@subsectionpages {21}{22}}
-\headcommand {\slideentry {2}{4}{1}{23/23}{Linear advection equations}{0}}
+\headcommand {\beamer@subsectionentry {0}{2}{2}{23}{Matrix formulation of conservation laws}}\headcommand {\beamer@subsectionpages {16}{22}}
+\headcommand {\slideentry {2}{2}{1}{23/23}{Matrix formulation of conservation laws}{0}}
 \headcommand {\beamer@framepages {23}{23}}
-\headcommand {\slideentry {2}{4}{2}{24/24}{Linear advection equations}{0}}
+\headcommand {\slideentry {2}{2}{2}{24/24}{Matrix formulation of conservation laws}{0}}
 \headcommand {\beamer@framepages {24}{24}}
-\headcommand {\slideentry {2}{4}{3}{25/25}{Linear advection equations}{0}}
+\headcommand {\slideentry {2}{2}{3}{25/25}{Matrix formulation of conservation laws}{0}}
 \headcommand {\beamer@framepages {25}{25}}
-\headcommand {\beamer@subsectionentry {0}{2}{5}{26}{The Riemann problem}}\headcommand {\beamer@subsectionpages {23}{25}}
-\headcommand {\slideentry {2}{5}{1}{26/26}{The Riemann problem}{0}}
+\headcommand {\slideentry {2}{2}{4}{26/26}{Matrix formulation of conservation laws}{0}}
 \headcommand {\beamer@framepages {26}{26}}
-\headcommand {\beamer@partpages {1}{26}}
-\headcommand {\beamer@subsectionpages {26}{26}}
-\headcommand {\beamer@sectionpages {13}{26}}
-\headcommand {\beamer@documentpages {26}}
-\headcommand {\def \inserttotalframenumber {26}}
+\headcommand {\beamer@subsectionentry {0}{2}{3}{27}{The Riemann problem}}\headcommand {\beamer@subsectionpages {23}{26}}
+\headcommand {\slideentry {2}{3}{1}{27/27}{The Riemann problem}{0}}
+\headcommand {\beamer@framepages {27}{27}}
+\headcommand {\slideentry {2}{3}{2}{28/28}{The Riemann problem}{0}}
+\headcommand {\beamer@framepages {28}{28}}
+\headcommand {\slideentry {2}{3}{3}{29/29}{The Riemann problem}{0}}
+\headcommand {\beamer@framepages {29}{29}}
+\headcommand {\beamer@subsectionentry {0}{2}{4}{30}{And a bit of reading}}\headcommand {\beamer@subsectionpages {27}{29}}
+\headcommand {\slideentry {2}{4}{1}{30/30}{And a bit of reading}{0}}
+\headcommand {\beamer@framepages {30}{30}}
+\headcommand {\beamer@partpages {1}{30}}
+\headcommand {\beamer@subsectionpages {30}{30}}
+\headcommand {\beamer@sectionpages {15}{30}}
+\headcommand {\beamer@documentpages {30}}
+\headcommand {\def \inserttotalframenumber {30}}
