@@ -113,13 +113,21 @@ KU Leuven
 \BD
 
 \svsp
-\bul \BF{Spatial discretization} \hfill \\
+\bul \BF{Preliminary concepts} \hfill \\
 Mesh and data collocation\\
-Discrete equations
+Consistency\\
+Stability
+
+\bul \BF{Spatial discretization} \hfill \\
+Discretized functions and derivatives\\
+Backward, forward and central finite difference\\
+Truncation error and order of accuracy
 
 \bul \BF{Time advance} \hfill \\
 Von Neumann stability analysis\\
-Explicit linear schemes
+Explicit methods\\
+Implicit methods\\
+Accuracy and positivity
 
 \ED
 \end{frame}
@@ -577,7 +585,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \subsection{Accuracy and positivity}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Godunov's theorem}
+\frametitle{Godunov's order barrier theorem}
 
 \BD
 
