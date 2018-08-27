@@ -10,7 +10,5 @@
 \beamer@subsectionintoc {2}{3}{Discretized second order derivatives}{14}{0}{2}
 \beamer@sectionintoc {3}{Temporal discretization}{15}{0}{3}
 \beamer@subsectionintoc {3}{1}{Explicit methods}{16}{0}{3}
-\beamer@subsectionintoc {3}{2}{Implicit methods}{24}{0}{3}
-\beamer@sectionintoc {4}{Time advance}{31}{0}{4}
-\beamer@subsectionintoc {4}{1}{Von Neumann stability analysis}{32}{0}{4}
-\beamer@subsectionintoc {4}{2}{Explicit linear schemes}{34}{0}{4}
+\beamer@subsectionintoc {3}{2}{Implicit methods}{27}{0}{3}
+\beamer@subsectionintoc {3}{3}{Accuracy and positivity}{29}{0}{3}

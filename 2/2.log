@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  26 AUG 2018 17:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  26 AUG 2018 20:40
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1247,7 +1247,7 @@ LaTeX Info: Redefining \includegraphics on input line 96.
 \c@saveenumi=\count289
 \c@saveenumiplus=\count290
 
-<figures/sedes.jpg, id=77, 853.5087pt x 853.5087pt>
+<figures/sedes.jpg, id=69, 853.5087pt x 853.5087pt>
 File: figures/sedes.jpg Graphic file (type jpg)
  <use figures/sedes.jpg>
 Package pdftex.def Info: figures/sedes.jpg used on input line 104.
@@ -1286,7 +1286,7 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10.95> not available
 ]
 (./2.toc) [4
 
-] <figures/FD_FV.png, id=143, 1204.5pt x 570.13pt>
+] <figures/FD_FV.png, id=130, 1204.5pt x 570.13pt>
 File: figures/FD_FV.png Graphic file (type png)
 
 <use figures/FD_FV.png>
@@ -1299,7 +1299,7 @@ Package pdftex.def Info: figures/FD_FV.png used on input line 144.
 ] [7
 
 ]
-LaTeX Font Info:    Try loading font information for T1+ptm on input line 200.
+LaTeX Font Info:    Try loading font information for T1+ptm on input line 207.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
@@ -1307,17 +1307,17 @@ File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 
 Package amsmath Warning: Foreign command \over;
 (amsmath)                \frac or \genfrac should be used instead
-(amsmath)                 on input line 200.
+(amsmath)                 on input line 207.
 
 [8
 
 ] (./2.toc) [9
 
-] <figures/FD_mesh.png, id=204, 587.19376pt x 568.1225pt>
+] <figures/FD_mesh.png, id=189, 587.19376pt x 568.1225pt>
 File: figures/FD_mesh.png Graphic file (type png)
 
 <use figures/FD_mesh.png>
-Package pdftex.def Info: figures/FD_mesh.png used on input line 223.
+Package pdftex.def Info: figures/FD_mesh.png used on input line 230.
 (pdftex.def)             Requested size: 113.80792pt x 113.80452pt.
  [10
 
@@ -1329,7 +1329,7 @@ Package pdftex.def Info: figures/FD_mesh.png used on input line 223.
 ! Missing { inserted.
 <to be read again> 
                    \def 
-l.279 \end{frame}
+l.286 \end{frame}
                  
 A left brace was mandatory here, so I've put one in.
 You might want to delete and/or insert some corrections
@@ -1339,7 +1339,7 @@ so that I will find a matching right brace soon.
 ! Missing } inserted.
 <inserted text> 
                 }
-l.279 \end{frame}
+l.286 \end{frame}
                  
 I've inserted something that you may have forgotten.
 (See the <inserted text> above.)
@@ -1351,18 +1351,45 @@ my insertion and my current dilemma will both disappear.
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <14.4> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 301.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 308.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 301.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 308.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 301.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 308.
  [14
 
 ] (./2.toc) [15
 
 ] [16
 
-] [17
+]
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.352 \end{frame}
+                 
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+
+! Package inputenc Error: Keyboard character used is undefined
+(inputenc)                in inputencoding `latin1'.
+
+See the inputenc package documentation for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.352 \end{frame}
+                 
+You need to provide a definition with \DeclareInputText 
+or \DeclareInputMath before using this key.
+
+[17
 
 ] [18
 
@@ -1380,175 +1407,53 @@ Non-PDF special ignored!] [20
 
 ] [22
 
+] [23
+
+] [24
+
 ]
-<figures/FD_explicit_methods.png, id=334, 839.135pt x 683.55376pt>
+<figures/CD_VS_upwind.png, id=338, 940.51375pt x 405.515pt>
+File: figures/CD_VS_upwind.png Graphic file (type png)
+
+<use figures/CD_VS_upwind.png>
+Package pdftex.def Info: figures/CD_VS_upwind.png used on input line 504.
+(pdftex.def)             Requested size: 284.52423pt x 142.2665pt.
+ [25
+
+ <./figures/CD_VS_upwind.png>]
+
+! LaTeX Error: Something's wrong--perhaps a missing \item.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.520 \end{frame}
+                 
+Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+<figures/FD_explicit_methods.png, id=350, 839.135pt x 683.55376pt>
 File: figures/FD_explicit_methods.png Graphic file (type png)
 
 <use figures/FD_explicit_methods.png>
-Package pdftex.def Info: figures/FD_explicit_methods.png used on input line 454
+Package pdftex.def Info: figures/FD_explicit_methods.png used on input line 520
 .
-(pdftex.def)             Requested size: 177.82407pt x 156.48395pt.
- [23
+(pdftex.def)             Requested size: 170.71776pt x 142.25719pt.
+ [26
 
  <./figures/FD_explicit_methods.png>]
-
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.464 \end{frame}
-                 
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[24
-
-]
-
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.472 \end{frame}
-                 
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[25
-
-]
-
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.480 \end{frame}
-                 
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[26
-
-]
-
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.488 \end{frame}
-                 
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
 [27
 
-]
 
-! LaTeX Error: Something's wrong--perhaps a missing \item.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.497 \end{frame}
-                 
-Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-[28
+Non-PDF special ignored!
+Non-PDF special ignored!
+Non-PDF special ignored!
+Non-PDF special ignored!] [28
 
 ] [29
 
-] <figures/Fig15-15.pdf, id=391, 597.23125pt x 254.9525pt>
-File: figures/Fig15-15.pdf Graphic file (type pdf)
-
-<use figures/Fig15-15.pdf>
-Package pdftex.def Info: figures/Fig15-15.pdf used on input line 527.
-(pdftex.def)             Requested size: 284.52618pt x 113.81334pt.
-
-Overfull \vbox (18.40631pt too high) detected at line 527
- []
-
-[30
-
- <./figures/Fig15-15.pdf>] (./2.toc) [31
-
-] [32
-
-] [33
-
 ]
-<figures/Fig15-17.pdf, id=441, 380.42125pt x 152.57pt>
-File: figures/Fig15-17.pdf Graphic file (type pdf)
-
-<use figures/Fig15-17.pdf>
-Package pdftex.def Info: figures/Fig15-17.pdf used on input line 579.
-(pdftex.def)             Requested size: 212.84288pt x 85.35826pt.
- [34
-
-
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored! <./figures/Fig15-17.pdf>]
-File: figures/Fig15-17.pdf Graphic file (type pdf)
- <use figures/Fig15-17.pdf>
-Package pdftex.def Info: figures/Fig15-17.pdf used on input line 594.
-(pdftex.def)             Requested size: 212.84288pt x 85.35826pt.
-
-[35
-
-
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!]
-File: figures/Fig15-17.pdf Graphic file (type pdf)
- <use figures/Fig15-17.pdf>
-Package pdftex.def Info: figures/Fig15-17.pdf used on input line 609.
-(pdftex.def)             Requested size: 212.84288pt x 85.35826pt.
- [36
-
-
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!]
-File: figures/Fig15-17.pdf Graphic file (type pdf)
- <use figures/Fig15-17.pdf>
-Package pdftex.def Info: figures/Fig15-17.pdf used on input line 624.
-(pdftex.def)             Requested size: 212.84288pt x 85.35826pt.
- [37
-
-
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!
-Non-PDF special ignored!]
 \tf@nav=\write7
 \openout7 = `2.nav'.
 
@@ -1558,20 +1463,20 @@ Non-PDF special ignored!]
 \tf@snm=\write9
 \openout9 = `2.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 626.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 626.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 612.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 612.
  (./2.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 626.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 626.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 612.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 612.
 Package rerunfilecheck Info: File `2.out' has not changed.
-(rerunfilecheck)             Checksum: 64DAC333D9CC7DBB44B5F8470EF7927D;940.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 626.
+(rerunfilecheck)             Checksum: 2B897F288EC7F8846EF2EEA4D44978BD;811.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 612.
  ) 
 Here is how much of TeX's memory you used:
- 29339 strings out of 493014
- 568398 string characters out of 6133351
- 619128 words of memory out of 5000000
- 32204 multiletter control sequences out of 15000+600000
+ 29304 strings out of 493014
+ 568065 string characters out of 6133351
+ 619205 words of memory out of 5000000
+ 32188 multiletter control sequences out of 15000+600000
  66469 words of font info for 90 fonts, out of 8000000 for 9000
  1146 hyphenation exceptions out of 8191
  56i,17n,65p,10338b,692s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1588,10 +1493,10 @@ texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2016/texmf-d
 ist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2016/texmf-dist/fon
 ts/type1/urw/helvetic/uhvro8a.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
 e1/urw/times/utmr8a.pfb>
-Output written on 2.pdf (37 pages, 1460937 bytes).
+Output written on 2.pdf (29 pages, 1515840 bytes).
 PDF statistics:
- 540 PDF objects out of 1000 (max. 8388607)
- 462 compressed objects within 5 object streams
- 94 named destinations out of 1000 (max. 500000)
- 237 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 442 PDF objects out of 1000 (max. 8388607)
+ 373 compressed objects within 4 object streams
+ 78 named destinations out of 1000 (max. 500000)
+ 210 words of extra memory for PDF output out of 10000 (max. 10000000)
 

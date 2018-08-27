@@ -1,5 +1,7 @@
 \beamer@slide {eq:Taylor1}{13}
 \beamer@slide {eq:Taylor2}{13}
 \beamer@slide {eq:Taylor3}{13}
+\beamer@slide {eq:lin_adv}{16}
 \beamer@slide {eq:explicit}{17}
-\beamer@slide {fig:FD_explicit_methods}{23}
+\beamer@slide {eq:LW}{21}
+\beamer@slide {fig:FD_explicit_methods}{26}

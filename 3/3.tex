@@ -31,6 +31,7 @@
 \usepackage[absolute,overlay]{textpos}
 \usepackage{colortbl}
 \usepackage{multimedia}
+\usepackage{minibox}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -104,7 +105,7 @@ KU Leuven
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \begin{center}
-  \framebox[.9\textwidth]{\color{darkred}{\textbf{Lesson 3 : Non linear hybridization for scalar advection}}}
+  \minibox[frame,c]{\color{darkred}{\textbf{Lesson 2 :}}\\ \color{darkred}{\textbf{Finite Volume Approximation for linear hyperbolic PDE}}}
 \end{center}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -141,20 +142,56 @@ Runge-Kutta\\
 \subsection{Mesh, cell centers \& interfaces}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
+\frametitle{Mehs}
+\BD
+
+\bul Balsara 2.2, Leveque1 12.1, Leveque2 4.1
+
+\begin{center}
+\includegraphics[width=4cm,height=4cm]{figures/FV_mesh}
+\end{center}
+
+\bul Take a 1D conservation law without source terms :
+\begin{equation}
+\partial_t u + \partial_xf\right)=0
+\label{eq:cons_law}
+\end{equation} 
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Integral form of the conservative equations}
 
 \BD
 
-\bul \BFred{useless?} Method is \BFblue{consistent} since LTE vanish in limit  $\Dx\rightarrow 0$ and $\Dt\rightarrow 0$
-\iar accuracy: 2nd order space, 1st order time $\rightarrow$ overall 1st 
-\iar failure is related to numerical stability
-\pause
-\bul round-off errors should not grow during time progression
-\iar evaluate by \BFred{von Neumann method}
-\iar numerical solution = exact $+$ round-off error $\epsilon(x,t)$
-\iar represent $\epsilon(x,t)$ in Fourier series, analyse Fourier term
-$$ \epsilon_k(x,t) = \hat{\epsilon}_k {\rm e}^{\lambda t} {\rm e}^{{\rm i}kx} $$
-\bul numerically stable scheme: for all spatial wavenumbers $k$
-$$  \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| = \big| {\rm e}^{\lambda\Dt}\big| \le 1 $$
+\bul Average variables $u$ over cell to get $U$ : $\frac{1}{\Dx}\int_{\text{cell}}$\eqref{eq:cons_law}
+\iar 1$^{\text{st}}$ order forward in time then gives :
+$$\frac{U^{n+1}_i-U^{n}_i}{\Dt}=-\frac{F^{n+1/2}_{i+1/2}-F^{n-1/2}_{i-1/2}}{\Dx}$$
+\begin{equation*}
+\text{where} \quad 
+\left\{\begin{aligned} U^{n}_i=\frac{1}{\Dx}\int_{x_{i-1/2}}^{x_{i+1/2}}u\left(x,t^n\right)\Dx\\ 
+F^{n+1/2}_{i+1/2}=\text{flux @ interface i+1/2} \xrightarrow \quad \text{unknown}\end{aligned}
+\end{equation*}
+
+\iar $\sum$ over all cells => fluxes cancel out => conservative
+
+\bul \underline{Key-question:} how do you reconstruct the fluxes @ interfaces?
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Slab representation}
+
+\BD
+
+\begin{center}
+\includegraphics[width=9.3cm,height=7cm]{figures/FV_upwind_Godunov}
+\end{center}
+
 \ED
 
 \end{frame}
@@ -165,17 +202,8 @@ $$  \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| = \big| {\rm e}^{\lambda\D
 
 \BD
 
-\bul \BFred{useless?} Method is \BFblue{consistent} since LTE vanish in limit  $\Dx\rightarrow 0$ and $\Dt\rightarrow 0$
-\iar accuracy: 2nd order space, 1st order time $\rightarrow$ overall 1st 
-\iar failure is related to numerical stability
-\pause
-\bul round-off errors should not grow during time progression
-\iar evaluate by \BFred{von Neumann method}
-\iar numerical solution = exact $+$ round-off error $\epsilon(x,t)$
-\iar represent $\epsilon(x,t)$ in Fourier series, analyse Fourier term
-$$ \epsilon_k(x,t) = \hat{\epsilon}_k {\rm e}^{\lambda t} {\rm e}^{{\rm i}kx} $$
-\bul numerically stable scheme: for all spatial wavenumbers $k$
-$$  \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| = \big| {\rm e}^{\lambda\Dt}\big| \le 1 $$
+
+
 \ED
 
 \end{frame}
@@ -187,13 +215,7 @@ $$  \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| = \big| {\rm e}^{\lambda\D
 \begin{frame}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -204,13 +226,8 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \frametitle{MinMod}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
+
 \ED
 
 \end{frame}
@@ -219,13 +236,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \frametitle{MC}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -234,13 +245,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \frametitle{Van Leer}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -249,13 +254,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \frametitle{Superbee}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -266,13 +265,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \frametitle{Harten's theorem}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -281,13 +274,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \frametitle{Definition of TV}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -296,13 +283,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \frametitle{TVD regions of slope limiters}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -314,13 +295,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \begin{frame}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -330,13 +305,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \begin{frame}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -346,13 +315,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \begin{frame}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -362,13 +325,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \begin{frame}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -378,13 +335,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \begin{frame}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -396,13 +347,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \begin{frame}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}
@@ -412,13 +357,7 @@ $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx
 \begin{frame}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
 \ED
 
 \end{frame}

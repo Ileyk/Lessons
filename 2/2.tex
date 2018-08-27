@@ -187,6 +187,8 @@ $$\text{EOC}_{\nu}=\frac{\log\left(\epsilon_{\nu}/\epsilon_{\nu-1}\right)}{\log\
 
 \BD
 
+\bul Balsara 2.5 and intro of 2.7
+
 \bul round-off errors should not grow during time progression
 
 \iar numerical solution = exact $+$ round-off error $\epsilon(x,t)$
@@ -194,6 +196,11 @@ $$\text{EOC}_{\nu}=\frac{\log\left(\epsilon_{\nu}/\epsilon_{\nu-1}\right)}{\log\
 $$ \epsilon_i^{n}\left(k\right) = \hat{\epsilon}_k {\rm e}^{\lambda t^n} {\rm e}^{{\rm i}kx_i} $$
 \bul numerically stable scheme $\forall$ spatial wavenumbers $k$ if
 $$  \bigg|{\epsilon_i^{n+1}\left(k\right) \over \epsilon_i^n\left(k\right)}\bigg| = \big| {\rm e}^{\lambda\Dt}\big| \le 1 $$
+
+\bul Lax equivalence theorem :
+\begin{center}
+consistent $+$ stable <=> convergent
+\end{center}
 
 \ED
 
@@ -309,8 +316,11 @@ $$u_{i}'\sim\frac{u_{i+1}-u_{i-1}}{2\Delta x}$$
 
 \BD
 
-\bul Consider the 1D linear advection equation with constant speed $v$
-$$\partial_t \rho+ v \partial_x \rho =0$$
+\bul Consider the 1D linear advection equation with constant speed $v$ :
+\begin{equation}
+\partial_t \rho+ v \partial_x \rho =0
+\label{eq:lin_adv}
+\end{equation}
 
 \bul Explicit time integration: values at t$^{n+1}$ computed from available information on time level t$^n=$t$^{n+1}-\Delta t$
 
@@ -322,7 +332,7 @@ $$\partial_t \rho+ v \partial_x \rho =0$$
 
 \BD
 
-\bul \underline{Example:} explicit forward 2$^{\text{nd}}$ order central difference 
+\bul \underline{Example:} explicit forward 2$^{\text{nd}}$ order central difference (a.k.a. Euler’s Forward Time Central Space, FTCS)
 
 $$\frac{u^{n+1}-u^n}{\Delta t} = - v \frac{u^n_{i+1}-u^n_{i-1}}{2\Delta x}$$
 
@@ -336,7 +346,7 @@ u^{n+1}_i = u^n_i - v \,{\Dt \over \Dx} \,{u^n_{i+1} - u^n_{i-1} \over2}
 
 \iar Is this FD approximation consistent? % yes
 
-\bul \underline{Sandbox:} Write your 1$^{\text{st}}$ solver using the explicit forward 2$^{\text{nd}}$ order central difference above. Apply it to the Riemann problem (advection of a step function). Is the numerical solution stable?
+\bul \underline{Sandbox:} Write your 1$^{\text{st}}$ solver using the Euler's FTCS above (and periodic boundary conditions, $\sim$ infinite simulation space). Apply it to the Riemann problem (advection of a step function). Is the numerical solution stable?
 
 \ED
 \end{frame}
@@ -345,6 +355,8 @@ u^{n+1}_i = u^n_i - v \,{\Dt \over \Dx} \,{u^n_{i+1} - u^n_{i-1} \over2}
 \frametitle{Von Neumann stability analysis}
 
 \BD
+
+\bul Balsara 2.7.1
 
 \bul Von Neumann stability analysis
 $$ {\rm e}^{\lambda \Dt} = 1 - {v\Dt \over \Dx} \,{{\rm e}^{{\rm i}k\Dx} - {\rm e}^{-{\rm i}k\Dx} \over 2} = 1-{\rm i} \,{v\Dt \over \Dx} \,\sin{(k\Dx)} $$
@@ -364,7 +376,7 @@ $$ \bigg|{\epsilon_k^{n+1} \over \epsilon_k^n}\bigg| > 1 $$
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Numerical diffusivity}
+\frametitle{Numerical diffusivity : the Lax-Friedrichs scheme}
 
 \BD
 
@@ -397,6 +409,9 @@ $$ C \equiv {|v|\Dt \over \Dx} \le 1 $$
 
 \bul \underline{Rk:} see stencil of Lax-Friedrichs scheme in Table on slide \ref{fig:FD_explicit_methods}
 
+\bul \underline{Exo :} retrieve the figures on slide\# 62 of Balsara 2.7.2
+\iar very diffusive
+
 \ED
 
 \end{frame}
@@ -407,12 +422,33 @@ $$ C \equiv {|v|\Dt \over \Dx} \le 1 $$
 \BD
 
 \bul Lax-Friedrichs has different o.a. in space (2$^{\text{nd}}$) and time (1$^{\text{st}}$) 
-\iar Taylor expansion in time suggests :
+\iar 2$^{\text{nd}}$ order Taylor expansion in time of $u_i(t),$ yields :
+\begin{equation}
+u_i(t+\Delta t)=u_i(t)+u_i'(t)\Dt+u_i''(t)\frac{(\Dt)^2}{2}
+\label{eq:LW}
+\end{equation}
+\iar \eqref{eq:lin_adv} => $u_i'\sim -v\partial_x u$ 
+\iar to find $u_i''$, $\partial_t$\eqref{eq:lin_adv} and (illegaly) switch $\partial_t$ and $\partial_x$ in mixed term :
+$$u_i''\sim v^2 \partial_{xx} u $$
+\iar finally, reinject in \eqref{eq:LW} and use a central difference for spatial derivatives :
 $$ u^{n+1}_i = u^n_i - \half{\Dt \over \Dx}\,v \,(u^n_{i+1} - u^n_{i-1}) + \half {(\Dt)^2 \over (\Dx)^2} \,v^2 \,(u^n_{i+1} - 2 u^n_i + u^n_{i-1}) $$
-\iar 2$^{\text{nd}}$ order in space and in time
+
+\ED
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{The Lax-Wendroff scheme}
+
+\BD
+
+\bul 2$^{\text{nd}}$ order in space and time
 
 \bul Conditionally stable
 \iar for $\Dt = \Dx / v$, we retrieve the Lax-Friedrichs scheme
+
+\bul \underline{Exo :} retrieve the figures on slide\# 67 of Balsara 2.7.3 and compare the empirical order of convergence with respect to Lax-Friedrichs
+\iar non positivity-preserving (<= monotonicity-preserving)
 
 \ED
 
@@ -437,190 +473,140 @@ $$ u^{n+1}_i = u^{\textcolor{red}{n-1}}_i - v \,{\Dt \over \Dx} \,{u^n_{i+1} - u
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
 \begin{frame}
-\frametitle{Examples}
+\frametitle{First order upwind scheme}
 
 \BD
 
-\bul Overview of explicit FD methods (from Leveque1 chapter 10)
+\bul Balsara 2.7.5
+
+\bul Physically-speaking, isn't it silly that, for $v>0$ for instance, $u_i^{n+1}$ depends on $u_{i+1}^{n}$? 
+\iar Information should propagate \@ wave speeds (see previous lesson)
+
+$$\frac{u^{n+1}_i-u^{n}_i}{\Dt} = - v \frac{u^n_{i}-u^n_{i-1}}{\Dx}$$
+\iar also called the donor cell scheme
+
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{First order upwind scheme}
+
+\BD
+
+\bul Positivity preserving ("$>0$"), but 1$^{\text{st}}$ order accurate
 
 \begin{center}
-\includegraphics[width=6.25cm,height=5.5cm]{figures/FD_explicit_methods}
-\label{fig:FD_explicit_methods}
+\includegraphics[width=10cm,height=5cm]{figures/CD_VS_upwind}
 \end{center}
 
 \ED
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Overview of explicit methods}
+
+\BD
+
+\begin{center}
+\includegraphics[width=6cm,height=5cm]{figures/FD_explicit_methods}
+\label{fig:FD_explicit_methods}
+\end{center}
+
+1$^{\text{st}}$ order schemes safe, can be $>0$ BUT very diffusive\\
+2$^{\text{nd}}$ order schemes accurate => great for smooth profiles (e.g. Gaussian) but terrible for discontinuous ones (e.g. top hat) because non $>0$
+
+\ED
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Runge-Kutta?}
+%
+%\BD
+%
+%\bul Balsara 2.7.4
+%\bul Rony slide 17 lesson 3
+%
+%\ED
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Implicit methods}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{}
+\frametitle{Principle}
 
 \BD
+
+\bul third cure to instability of Euler FTCS scheme: evaluate spatial derivative at $t^{n+1}$
+$$  u^{n+1}_i = u^n_i - v \,{\Dt \over \Dx} \,{u^{\Red{n+1}}_{i+1}- u^{\Red{n+1}}_{i-1}\over 2} $$
+\iar Backwards in Time, Central in Space Euler scheme (BTCS)
+\iar $u^{n+1}_i$ not expressed in terms of values at time $t^n$: implicit
+
+\bul Stencil?
 
 \ED
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{}
+\frametitle{Von Neumann stability analysis}
 
 \BD
 
-\ED
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{}
-
-\BD
-
-\ED
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{}
-
-\BD
-
-\ED
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Central FD method}
-
-\BD
-
-\ED
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Truncation error and order of accuracy}
-
-\BD
-\bul for second order wave equation
-$$ \deldeltt{u}- v^2 \deldelxx{u} = 0 $$
-\iar factorizes to
-$$ \left(\deldelt{}- v \deldelx{}\right)\left(\deldelt{}+ v \deldelx{}\right) u = 0 $$
-\iar general solution has left and right going wave with
-$$ u= f(x-v t) + g(x+v t) $$
-\iar initial shapes $f(x)$, $g(x)$ combine 
-\iar 2 characteristics $\frac{dx}{dt}=\pm v$
-\ED
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Consistency of a FDA w/ respect to its PDE}
-
-\BD
-\bul illustrate CFL for second order wave equation:
-\hfill \\
-\BFred{the domain of dependence of the differential equation should be contained in the DOD of the discretised equations} \hfill \\
-\yellowbx{\includegraphics[height=4cm,width=10cm,clip=]{figures/Fig15-15}}
-\iar stability means physical DOD contained in stencil bounds (numerical DOD), hence $\Delta t$ small enough (right case)
-\pause
-\bul note: linear advection $+$ wave equation: DOD only involves 1 or 2 points from $t=0$
-$\leftrightarrow$ HD: DOD bounds set by $v\pm c_s$ with $c_s$ sound speed, delimits $t=0$ interval
-\ED
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Time advance}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Von Neumann stability analysis}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Principle and necessary stability condition}
-
-\BD
 \bul von Neumann stability analysis for BTCS scheme
 $$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
-\ED
+\iar unconditionally stable, any time step $\Dt$ allowed
 
+\bul But stability $\neq$ accuracy
+\iar the larger $\Dt$, the lower the accuracy
+
+\bul BTCS is 1$^{\text{st}}$ order in time
+
+\bul Implicit methods more used for elliptic PDE => not covered by the current course
+
+\ED
 \end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Crank-Nicolson?}
+%
+%\BD
+%
+%\ED
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Accuracy and positivity}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Convergence : Lax-Richtmeyer theorem}
+\frametitle{Godunov's theorem}
 
 \BD
-\bul von Neumann stability analysis for BTCS scheme
-$$ \big|{\rm e}^{\lambda \Dt}\big| = {1 \over \left|1 + {\rm i} \frac{v \Dt}{\Dx} \sin{(k\Dx)}\right|} < 1  \qquad \hbox{for all $k$} $$
-\iar \BFred{unconditionally stable}, any (large) time step $\Dt$ allowed
-\vspace*{0.5cm}
-\bul note: \BFblue{stability does not imply accuracy}
-\iar large $\Dt$ affects accuracy, defines time resolution: behavior may involve physical timescale that needs to be resolved!
-\bul implicit backward Euler: first order in time
+
+\bul Explicit schemes
+\begin{align*}
+\text{ Scheme } & \text{o.a.} & \text{Can be stable?} & >0\text{?}\\
+\text{ FTCS } & 1^{\text{st}} & \text{no} & \text{yes}\\
+\text{Lax-Friedrichs} & 1^{\text{st}} & \text{yes} & \text{yes}\\
+\text{Lax-Wendroff} & 2^{\text{nd}} & \text{yes} & \text{no}\\
+\text{Upwind} & 1^{\text{st}} & \text{yes} & \text{no}
+\end{align*}
+
+\begin{center}
+\textit{"All linear positivity-preserving schemes for linear advection\\ are condemned to be 1$^{\text{st}}$ order accurate"}
+\end{center}
+
+\bul We want :
+\iar accuracy where the variables are smooth (i.e. $\sim$Gaussian)
+\iar positivity where they are discontinuous (i.e. $\sim$top hat)
+
 \ED
-
 \end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Explicit linear schemes}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Lax-Friedrichs}
-
-\BD
-\bul spatial differences as average of $n$-th and $(n+1)$-th time step
-$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
-\iar second order \BFred{Crank--Nicolson method}
-\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
-\vspace*{0.5cm}
-\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
-\centerline{\yellowbx{\includegraphics[height=3cm]{figures/Fig15-17}}}
-\ED
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Lax-Wendroff}
-
-\BD
-\bul spatial differences as average of $n$-th and $(n+1)$-th time step
-$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
-\iar second order \BFred{Crank--Nicolson method}
-\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
-\vspace*{0.5cm}
-\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
-\centerline{\includegraphics[height=3cm]{figures/Fig15-17}}
-\ED
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Runge-Kutta}
-
-\BD
-\bul spatial differences as average of $n$-th and $(n+1)$-th time step
-$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
-\iar second order \BFred{Crank--Nicolson method}
-\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
-\vspace*{0.5cm}
-\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
-\centerline{\includegraphics[height=3cm]{figures/Fig15-17}}
-\ED
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Upwind FD scheme}
-
-\BD
-\bul spatial differences as average of $n$-th and $(n+1)$-th time step
-$$  u^{n+1}_i = u^n_i - \onefourth v \,{\Dt \over \Dx} \,(u^{\Red{n+1}}_{i+1}+ u^{\Red{n}}_{i+1} - u^{\Red{n+1}}_{i-1} - u^{\Red{n}}_{i-1})  $$
-\iar second order \BFred{Crank--Nicolson method}
-\iar \BFblue{Exercise}: show that this scheme is unconditionally stable, 2nd order accurate
-\vspace*{0.5cm}
-\bul stencils for BTCS (left) and Crank-Nicolson (right) \hfill \\
-\centerline{\includegraphics[height=3cm]{figures/Fig15-17}}
-\ED
-
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{frame}
+%\frametitle{Godunov's theorem}
+%
+%\BD
+%
+%\ED
+%\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}

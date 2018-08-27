@@ -8,7 +8,5 @@
 \BOOKMARK [3][]{Outline0.2.3.14}{Discretized second order derivatives}{Outline0.2}% 8
 \BOOKMARK [2][]{Outline0.3}{Temporal discretization}{}% 9
 \BOOKMARK [3][]{Outline0.3.1.16}{Explicit methods}{Outline0.3}% 10
-\BOOKMARK [3][]{Outline0.3.2.24}{Implicit methods}{Outline0.3}% 11
-\BOOKMARK [2][]{Outline0.4}{Time advance}{}% 12
-\BOOKMARK [3][]{Outline0.4.1.32}{Von Neumann stability analysis}{Outline0.4}% 13
-\BOOKMARK [3][]{Outline0.4.2.34}{Explicit linear schemes}{Outline0.4}% 14
+\BOOKMARK [3][]{Outline0.3.2.27}{Implicit methods}{Outline0.3}% 11
+\BOOKMARK [3][]{Outline0.3.3.29}{Accuracy and positivity}{Outline0.3}% 12
